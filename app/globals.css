@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./editorial.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-cormorant);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-gold: #b08d57;
+  --color-oxblood: #6b1e23;
+  --color-ink: #141413;
+  --radius-sm: 0.15rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.35rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.7rem;
+  --radius-3xl: 0.9rem;
+  --radius-4xl: 1.1rem;
+}
+
+:root {
+  --background: #f7f4ef;
+  --foreground: #141413;
+  --card: #f7f4ef;
+  --card-foreground: #141413;
+  --popover: #f7f4ef;
+  --popover-foreground: #141413;
+  --primary: #141413;
+  --primary-foreground: #f7f4ef;
+  --secondary: #efece6;
+  --secondary-foreground: #141413;
+  --muted: #efece6;
+  --muted-foreground: #6d6a64;
+  --accent: #efece6;
+  --accent-foreground: #141413;
+  --destructive: #6b1e23;
+  --border: #ddd8cf;
+  --input: #ddd8cf;
+  --ring: #141413;
+  --chart-1: #141413;
+  --chart-2: #b08d57;
+  --chart-3: #6b1e23;
+  --chart-4: #6d6a64;
+  --chart-5: #2c2b29;
+  --radius: 0.15rem;
+  --sidebar: #efece6;
+  --sidebar-foreground: #141413;
+  --sidebar-primary: #141413;
+  --sidebar-primary-foreground: #f7f4ef;
+  --sidebar-accent: #f7f4ef;
+  --sidebar-accent-foreground: #141413;
+  --sidebar-border: #ddd8cf;
+  --sidebar-ring: #141413;
+}
+
+.dark {
+  --background: #141413;
+  --foreground: #f7f4ef;
+  --card: #1c1b19;
+  --card-foreground: #f7f4ef;
+  --popover: #1c1b19;
+  --popover-foreground: #f7f4ef;
+  --primary: #f7f4ef;
+  --primary-foreground: #141413;
+  --secondary: #2c2b29;
+  --secondary-foreground: #f7f4ef;
+  --muted: #2c2b29;
+  --muted-foreground: #9a968e;
+  --accent: #2c2b29;
+  --accent-foreground: #f7f4ef;
+  --destructive: #c56b76;
+  --border: #2c2b29;
+  --input: #2c2b29;
+  --ring: #b08d57;
+  --sidebar: #1c1b19;
+  --sidebar-foreground: #f7f4ef;
+  --sidebar-primary: #f7f4ef;
+  --sidebar-primary-foreground: #141413;
+  --sidebar-accent: #2c2b29;
+  --sidebar-accent-foreground: #f7f4ef;
+  --sidebar-border: #2c2b29;
+  --sidebar-ring: #b08d57;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading), "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility font-heading {
+  font-family: var(--font-heading), "Times New Roman", serif;
+}
+
+@utility kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+@utility house-wrap {
+  margin-inline: auto;
+  max-width: 1440px;
+  padding-inline: 1rem;
+}
+
+@utility house-section {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+@utility text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: gap 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+}
+
+.text-link:hover {
+  gap: 0.85rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -5rem;
+  z-index: 80;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+html[data-hero-overlay] [data-cart-dock] img {
+  filter: invert(1);
+}
+
+.house-select {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+html[dir="rtl"] {
+  --font-sans: var(--font-naskh), var(--font-manrope), sans-serif;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-naskh), var(--font-manrope), sans-serif;
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3 {
+  font-family: var(--font-naskh), var(--font-heading), serif;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+html[dir="rtl"] .kicker,
+html[dir="rtl"] .text-link,
+html[dir="rtl"] .uppercase,
+html[dir="rtl"] .hero .eyebrow,
+html[dir="rtl"] .brand-story .section-label,
+html[dir="rtl"] .skip-link {
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+html[dir="rtl"] .wordmark {
+  font-family: var(--font-heading), "Times New Roman", serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+html[dir="rtl"] .skip-link {
+  left: auto;
+  right: 1rem;
+}
+
+html[dir="rtl"] .hero h1,
+html[dir="rtl"] .brand-story h2,
+html[dir="rtl"] .shop-line h1,
+html[dir="rtl"] .hero-stills__title {
+  font-family: var(--font-naskh), serif;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.product-frame img {
+  transition: transform 0.8s ease, opacity 0.45s ease;
+}
+
+.product-frame:hover img.primary {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-frame img {
+    transition: none;
+  }
+}

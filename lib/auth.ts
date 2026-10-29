@@ -1,0 +1,90 @@
+import { cookies } from "next/headers";
+import type { User } from "@supabase/supabase-js";
+import { isSupabaseConfigured } from "./supabase/env";
+
+export const ADMIN_COOKIE = "tf_admin";
+export const ADMIN_COOKIE_VALUE = "house";
+
+export function adminPassword() {
+  return process.env.ADMIN_PASSWORD || "";
+}
+
+export function adminEmail() {
+  return process.env.ADMIN_EMAIL?.trim().toLowerCase() || "";
+}
+
+export async function setAdminCookie() {
+  const jar = await cookies();
+  jar.set(ADMIN_COOKIE, ADMIN_COOKIE_VALUE, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+    secure: process.env.NODE_ENV === "production",
+  });
+}
+
+export async function clearAdminCookie() {
+  const jar = await cookies();
+  jar.delete(ADMIN_COOKIE);
+}
+
+export function isAdminClaim(claims: unknown) {
+  if (!claims || typeof claims !== "object") return false;
+  const record = claims as {
+    app_metadata?: { role?: unknown };
+    app_role?: unknown;
+  };
+  if (record.app_metadata?.role === "admin") return true;
+  return record.app_role === "admin";
+}
+
+export async function getSessionUser(): Promise<User | null> {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    return data.user ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function sessionHasAdminRole(user: User | null) {
+  if (!user) return false;
+  if (user.app_metadata?.role === "admin") return true;
+  if (!isSupabaseConfigured()) return false;
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+    return data?.role === "admin";
+  } catch {
+    return false;
+  }
+}
+
+export async function promoteAdminIfNeeded(user: User) {
+  const expected = adminEmail();
+  if (!expected || user.email?.toLowerCase() !== expected) return false;
+  const { createAdminClient } = await import("./supabase/admin");
+  const admin = createAdminClient();
+  if (!admin) return false;
+  await admin.from("profiles").upsert({
+    id: user.id,
+    email: user.email,
+    role: "admin",
+  });
+  await admin.auth.admin.updateUserById(user.id, {
+    app_metadata: { ...(user.app_metadata ?? {}), role: "admin" },
+  });
+  return true;
+}
+
+export async function isAdmin() {
+  const jar = await cookies();
+  if (jar.get(ADMIN_COOKIE)?.value === ADMIN_COOKIE_VALUE) return true;
+  const user = await getSessionUser();
+  return sessionHasAdminRole(user);
+}

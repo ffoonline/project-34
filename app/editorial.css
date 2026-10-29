@@ -1,0 +1,350 @@
+/* Homepage editorial: photography hero, stills, split brand story.
+   Scoped so the shop keeps house tokens. Display face is Cormorant. */
+
+.hero,
+.brand-story,
+.hero-stills,
+.shop-line {
+  --color-ivory: #f7f4ef;
+  --color-ink: #141413;
+  --font-sans: var(--font-manrope), Arial, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+}
+
+.hero {
+  isolation: isolate;
+  position: relative;
+  min-height: 100svh;
+  margin-top: -3.75rem;
+  overflow: hidden;
+  color: var(--color-ivory);
+  background: #1a1917;
+  font-family: var(--font-sans);
+}
+
+@media (min-width: 640px) {
+  .hero {
+    margin-top: -4rem;
+  }
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media img {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(20, 20, 19, 0.18) 0%, rgba(20, 20, 19, 0.28) 42%, rgba(20, 20, 19, 0.52) 100%);
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: min(100% - 3rem, 1240px);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 0 0 max(5.5rem, calc(env(safe-area-inset-bottom, 0px) + 7.25rem));
+  text-align: center;
+  animation: hero-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero .eyebrow {
+  margin: 0 0 1.25rem;
+  color: rgba(247, 244, 239, 0.72);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 16ch;
+  margin: 0 auto;
+  color: var(--color-ivory);
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 7.2vw, 7.2rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.hero .text-link {
+  margin-top: 2rem;
+  color: var(--color-ivory);
+  border-color: rgba(247, 244, 239, 0.55);
+}
+
+.hero .text-link:hover {
+  border-color: var(--color-ivory);
+}
+
+.hero .text-link:focus-visible {
+  outline: 2px solid var(--color-ivory);
+  outline-offset: 5px;
+}
+
+.hero-stills {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.35rem;
+  padding: 0.35rem;
+  background: var(--color-ivory);
+}
+
+.hero-stills__cell {
+  position: relative;
+  display: block;
+  min-height: min(64vh, 720px);
+  overflow: hidden;
+  background: #1a1917;
+  color: var(--color-ivory);
+  text-decoration: none;
+}
+
+.hero-stills__image {
+  object-fit: cover;
+  transition: transform 900ms ease;
+}
+
+.hero-stills__cell:hover .hero-stills__image {
+  transform: scale(1.03);
+}
+
+.hero-stills__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(15, 15, 14, 0.58) 100%);
+  pointer-events: none;
+}
+
+.hero-stills__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 1.6rem 1.5rem;
+}
+
+.hero-stills__kicker {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+
+.hero-stills__title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.brand-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 720px;
+  color: var(--color-ink);
+  background: var(--color-ivory);
+  font-family: var(--font-sans);
+}
+
+.brand-story__media {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  background: #746b62;
+}
+
+.brand-story__media img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.brand-story__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(3rem, 8vw, 8rem);
+}
+
+.brand-story .section-label {
+  margin: 0 0 1.5rem;
+  color: #77736c;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.brand-story h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.4vw, 5.6rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+}
+
+.brand-story__content > p:not(.section-label) {
+  max-width: 28rem;
+  margin: 1.75rem 0 0;
+  color: #55524d;
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.brand-story .text-link {
+  margin-top: 2.25rem;
+  color: var(--color-ink);
+}
+
+.brand-story .text-link:hover {
+  gap: 0.85rem;
+}
+
+.brand-story .text-link:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 5px;
+}
+
+@media (max-width: 700px) {
+  .hero,
+  .hero__content {
+    min-height: 100svh;
+  }
+
+  .hero__content {
+    width: min(100% - 2.25rem, 540px);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
+  }
+
+  .hero-stills {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-stills__cell {
+    min-height: min(58svh, 520px);
+  }
+
+  .brand-story {
+    display: block;
+    min-height: auto;
+  }
+
+  .brand-story__media {
+    min-height: 420px;
+    max-height: 62svh;
+  }
+
+  .brand-story__content {
+    padding: 3.5rem 1.5rem 4.5rem;
+  }
+
+  .brand-story h2 {
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
+  }
+}
+
+.shop-line {
+  isolation: isolate;
+  position: relative;
+  min-height: min(48vh, 28rem);
+  overflow: hidden;
+  color: var(--color-ivory);
+  background: #1a1917;
+}
+
+.shop-line__media {
+  position: absolute;
+  inset: 0;
+}
+
+.shop-line__media img {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.shop-line__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 20, 19, 0.12) 0%, rgba(20, 20, 19, 0.42) 100%);
+  pointer-events: none;
+}
+
+.shop-line__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: min(48vh, 28rem);
+  flex-direction: column;
+  justify-content: flex-end;
+  width: min(100% - 2rem, 1440px);
+  margin: 0 auto;
+  padding: 2.25rem 0 2.25rem;
+}
+
+.shop-line .kicker {
+  color: rgba(247, 244, 239, 0.7);
+}
+
+.shop-line h1 {
+  margin: 0.65rem 0 0;
+  color: var(--color-ivory);
+  font-size: clamp(2.8rem, 6vw, 5.4rem);
+}
+
+.shop-line__lede {
+  max-width: 28rem;
+  margin: 1rem 0 0;
+  color: rgba(247, 244, 239, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__content,
+  .hero-stills__image,
+  .brand-story .text-link {
+    animation: none;
+    transition: none;
+  }
+
+  .hero-stills__cell:hover .hero-stills__image {
+    transform: none;
+  }
+}
