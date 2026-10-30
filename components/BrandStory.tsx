@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { lookbook } from "@/lib/catalog";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function BrandStory() {
@@ -12,7 +11,7 @@ export function BrandStory() {
     <section className="brand-story">
       <div className="brand-story__media">
         <Image
-          src={lookbook.atelier}
+          src="/editorial/flagship-store.jpg"
           alt={t("atelierAlt")}
           fill
           sizes="(max-width: 700px) 100vw, 50vw"
