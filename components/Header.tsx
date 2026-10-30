@@ -4,18 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Heart, Mail, ShoppingBag } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useCurrency } from "@/context/CurrencyContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { site } from "@/lib/site";
 import type { CopyKey } from "@/lib/i18n";
-import type { CurrencyCode } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Logo } from "@/components/Logo";
 import { WhatsAppIcon } from "@/components/HouseIcons";
 
@@ -27,6 +23,11 @@ const nav: { href: string; key: CopyKey }[] = [
   { href: "/shop/accessories", key: "handcraft" },
   { href: "/shop/fragrance", key: "beauties" },
 ];
+const menuLanguages = [
+  { code: "en", label: "ENG" },
+  { code: "fa-AF", label: "فارسی" },
+  { code: "ps", label: "پشتو" },
+] as const;
 const iconBtn = "size-10 sm:size-11 [&_svg]:size-[18px]";
 function TwoLineMenu() {
   return <span className="flex h-6 w-7 flex-col justify-center gap-[7px]" aria-hidden><span className="block h-px w-full bg-current" /><span className="block h-px w-full bg-current" /></span>;
@@ -39,9 +40,8 @@ export function Header(_props: { saleEnabled?: boolean }) {
   void _props;
   const { ids } = useWishlist();
   const { count } = useCart();
-  const { currency, setCurrency } = useCurrency();
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const { t, rtl } = useLanguage();
+  const { t, rtl, language, setLanguage } = useLanguage();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -79,12 +79,10 @@ export function Header(_props: { saleEnabled?: boolean }) {
                   <Logo invert={night} size={52} className="size-11" />
                   <span className="font-heading text-xl font-semibold tracking-[0.15em] uppercase">THIRTY FOUR</span>
                 </Link>
-                <div className="mt-3 flex items-center justify-center gap-2">
-                  <LanguageSwitcher />
-                  <Select value={currency} onValueChange={(value) => setCurrency(value as CurrencyCode)}>
-                    <SelectTrigger size="sm" className="h-8 w-[4.5rem] bg-transparent" aria-label={t("currencyLabel")}><SelectValue /></SelectTrigger>
-                    <SelectContent>{site.currencies.map((code) => <SelectItem key={code} value={code}>{code}</SelectItem>)}</SelectContent>
-                  </Select>
+                <div role="group" aria-label={t("language")} className="mt-4 flex w-full gap-2">
+                  {menuLanguages.map((item) => (
+                    <Button key={item.code} type="button" variant={language === item.code ? "default" : "outline"} aria-pressed={language === item.code} lang={item.code} onClick={() => setLanguage(item.code)} className="h-10 flex-1 rounded-md px-2 text-sm">{item.label}</Button>
+                  ))}
                 </div>
               </SheetHeader>
               <nav aria-label={t("menu")} className="mt-2 flex flex-col px-6">
