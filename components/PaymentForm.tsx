@@ -124,9 +124,9 @@ function PaymentIntentDesk({
             theme: "stripe",
             variables: {
               colorPrimary: "#111111",
-              colorBackground: "#faf9f6",
+              colorBackground: "#ffffff",
               colorText: "#111111",
-              colorDanger: "#6b1e23",
+              colorDanger: "#404040",
               fontFamily: "Manrope, sans-serif",
               borderRadius: "0px",
             },

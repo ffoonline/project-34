@@ -1,9 +1,14 @@
 import { cookies } from "next/headers";
 import type { User } from "@supabase/supabase-js";
 import { isSupabaseConfigured } from "./supabase/env";
+import {
+  ADMIN_COOKIE,
+  ADMIN_TOKEN_TTL_SECONDS,
+  createAdminToken,
+  verifyAdminToken,
+} from "./admin-token";
 
-export const ADMIN_COOKIE = "tf_admin";
-export const ADMIN_COOKIE_VALUE = "house";
+export { ADMIN_COOKIE };
 
 export function adminPassword() {
   return process.env.ADMIN_PASSWORD || "";
@@ -14,12 +19,17 @@ export function adminEmail() {
 }
 
 export async function setAdminCookie() {
+  const token = await createAdminToken();
+  if (!token) {
+    // No signing secret configured: do not set an unverifiable cookie.
+    return;
+  }
   const jar = await cookies();
-  jar.set(ADMIN_COOKIE, ADMIN_COOKIE_VALUE, {
+  jar.set(ADMIN_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: ADMIN_TOKEN_TTL_SECONDS,
     secure: process.env.NODE_ENV === "production",
   });
 }
@@ -84,7 +94,7 @@ export async function promoteAdminIfNeeded(user: User) {
 
 export async function isAdmin() {
   const jar = await cookies();
-  if (jar.get(ADMIN_COOKIE)?.value === ADMIN_COOKIE_VALUE) return true;
+  if (await verifyAdminToken(jar.get(ADMIN_COOKIE)?.value)) return true;
   const user = await getSessionUser();
   return sessionHasAdminRole(user);
 }

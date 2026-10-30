@@ -38,6 +38,15 @@ export const metadata: Metadata = {
     template: "%s | THIRTY FOUR",
   },
   description: site.description,
+  icons: {
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "THIRTY FOUR",
     description: site.description,
@@ -57,13 +66,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      dir="ltr"
       suppressHydrationWarning
       className={`${cormorant.variable} ${manrope.variable} ${geistMono.variable} ${naskh.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
         <Script id="tf-lang" strategy="beforeInteractive">
-          {`(function(){try{var l=localStorage.getItem("tf-lang");if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en")}}catch(e){}})();`}
+          {`(function(){try{var l=localStorage.getItem("tf-lang");if(l==="fa-AF"||l==="ps"){document.documentElement.lang=l;document.documentElement.dir="rtl";document.documentElement.setAttribute("data-lang",l)}}catch(e){}})();`}
         </Script>
         <Providers initialIdentifier={identifier}>
           {children}

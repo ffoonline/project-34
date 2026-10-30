@@ -1,16 +1,32 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { lookbook } from "@/lib/catalog";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function BrandStory() {
+  const { t } = useLanguage();
+
   return (
-    <section className="house-section border-y border-border text-center">
-      <div className="house-wrap max-w-4xl sm:px-6">
-        <p className="kicker">THIRTY FOUR GLOBAL</p>
-        <h2 className="mt-4 text-5xl sm:text-6xl md:text-7xl">34 Provinces. One Identity.</h2>
-        <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-muted-foreground sm:text-lg">
-          THIRTY FOUR draws its name from the 34 provinces of Afghanistan — a contemporary house built around identity, craftsmanship and a global outlook.
-        </p>
-        <Link href="/about" className="text-link mt-8">
-          Our story <span aria-hidden>→</span>
+    <section className="brand-story">
+      <div className="brand-story__media">
+        <Image
+          src={lookbook.atelier}
+          alt={t("atelierAlt")}
+          fill
+          sizes="(max-width: 700px) 100vw, 50vw"
+        />
+      </div>
+      <div className="brand-story__content">
+        <p className="section-label">{t("theHouse")}</p>
+        <h2>{t("aNumberYouCanKeep")}</h2>
+        <p>{t("houseStory")}</p>
+        <Link href="/about" className="text-link">
+          {t("readTheStory")}
+          <span aria-hidden className="inline-block rtl:rotate-180">
+            →
+          </span>
         </Link>
       </div>
     </section>

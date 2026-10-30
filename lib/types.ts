@@ -1,4 +1,4 @@
-export type Category = "men" | "women" | "kids" | "fragrance" | "beauty" | "accessories";
+export type Category = "men" | "women" | "kids" | "fragrance" | "accessories";
 
 export type Demand = "high" | "steady" | "limited";
 

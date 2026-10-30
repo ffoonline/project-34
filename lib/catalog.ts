@@ -2,15 +2,21 @@ import type { Product } from "./types";
 
 const photos = {
   kids: "/catalog/kids-rail.jpg",
+  kidsPremium: "/catalog/kids-premium.jpg",
   rf34Check: "/catalog/rf34-check-jacket.jpg",
   menOlive: "/catalog/men-olive-jacket.jpg",
+  menOliveSuit: "/catalog/men-olive-suit.jpg",
   menCharcoal: "/catalog/men-charcoal-jacket.jpg",
+  menMerino: "/catalog/men-merino-knit.jpg",
+  menTravelBlazer: "/catalog/men-travel-blazer.jpg",
+  menTrousers: "/catalog/men-trousers.jpg",
   rf34Navy: "/catalog/rf34-navy-jacket.jpg",
   rf34Ink: "/catalog/rf34-ink-jacket.jpg",
   womenAtelier: "/catalog/women-atelier.jpg",
-  menDressing: "/catalog/men-tees-rail.jpg",
-  fragrance: "/images/placeholders/fragrance-bottle.jpg",
-  accessories: "/images/placeholders/accessories-bag.jpg",
+  womenSilk: "/catalog/women-silk-dress.jpg",
+  menDressing: "/catalog/men-dressing.jpg",
+  fragrance: "/catalog/signature-34.jpg",
+  fragranceStill: "/catalog/fragrance-still.jpg",
   tees: "/catalog/men-tees-rail.jpg",
   knits: "/catalog/house-knits.jpg",
 } as const;
@@ -40,7 +46,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: true,
     demand: "high",
-    images: [photos.menCharcoal, photos.menOlive],
+    images: [photos.menCharcoal, photos.menOliveSuit, photos.menTravelBlazer],
   },
   {
     id: "tf-02",
@@ -116,7 +122,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: true,
     demand: "limited",
-    images: [photos.knits, photos.tees],
+    images: [photos.menMerino, photos.knits, photos.tees],
   },
   {
     id: "tf-05",
@@ -140,7 +146,7 @@ export const seedProducts: Product[] = [
     featured: false,
     newArrival: false,
     demand: "steady",
-    images: [photos.menOlive, photos.menCharcoal],
+    images: [photos.menTravelBlazer, photos.menOliveSuit, photos.menCharcoal],
   },
   {
     id: "tf-06",
@@ -166,7 +172,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: true,
     demand: "high",
-    images: [photos.womenAtelier, photos.rf34Check],
+    images: [photos.womenSilk, photos.womenAtelier, photos.rf34Check],
   },
   {
     id: "tf-07",
@@ -289,7 +295,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: true,
     demand: "high",
-    images: [photos.kids, photos.knits],
+    images: [photos.kidsPremium, photos.kids, photos.knits],
   },
   {
     id: "tf-12",
@@ -364,7 +370,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: false,
     demand: "high",
-    images: [photos.kids, photos.knits],
+    images: [photos.kidsPremium, photos.kids, photos.knits],
   },
   {
     id: "tf-15",
@@ -386,7 +392,7 @@ export const seedProducts: Product[] = [
     newArrival: true,
     bestSeller: true,
     demand: "high",
-    images: [photos.fragrance, photos.fragrance],
+    images: [photos.fragranceStill, photos.fragrance, photos.womenSilk],
   },
   {
     id: "tf-16",
@@ -407,7 +413,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: false,
     demand: "limited",
-    images: [photos.fragrance, photos.fragrance],
+    images: [photos.fragrance, photos.menCharcoal],
   },
   {
     id: "tf-17",
@@ -431,7 +437,7 @@ export const seedProducts: Product[] = [
     featured: true,
     newArrival: true,
     demand: "steady",
-    images: [photos.accessories, photos.accessories],
+    images: [photos.menDressing, photos.womenAtelier],
   },
   {
     id: "tf-18",
@@ -456,7 +462,7 @@ export const seedProducts: Product[] = [
     newArrival: false,
     bestSeller: true,
     demand: "steady",
-    images: [photos.accessories, photos.accessories],
+    images: [photos.menDressing, photos.menOlive],
   },
   {
     id: "tf-19",
@@ -507,7 +513,7 @@ export const seedProducts: Product[] = [
     featured: false,
     newArrival: true,
     demand: "steady",
-    images: [photos.knits, photos.tees],
+    images: [photos.menMerino, photos.knits, photos.tees],
   },
 ];
 
@@ -518,7 +524,6 @@ export const lookbook = {
   women: photos.rf34Check,
   kids: photos.kids,
   fragrance: photos.fragrance,
-  beauty: "/images/placeholders/beauty-vanity.jpg",
-  accessories: photos.accessories,
+  accessories: photos.menDressing,
   atelier: photos.womenAtelier,
 };

@@ -79,19 +79,26 @@ export function ProductConfigure({ product }: { product: Product }) {
           </p>
         ) : null}
 
-        <div className="hidden gap-3 lg:grid">
-          {product.images.map((src, index) => (
-            <div key={src} className="relative aspect-[3/4] overflow-hidden bg-muted">
-              <Image
-                src={src}
-                alt={shown.name}
-                fill
-                priority={index === 0}
-                className="object-cover"
-                sizes="55vw"
-              />
+        <div className="hidden lg:block space-y-3">
+          <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-lg">
+            <Image
+              src={product.images[0]}
+              alt={shown.name}
+              fill
+              priority
+              className="object-cover"
+              sizes="55vw"
+            />
+          </div>
+          {product.images.length > 1 && (
+            <div className="grid grid-cols-4 gap-2">
+              {product.images.slice(0, 4).map((src, idx) => (
+                <button key={src + idx} type="button" className="relative aspect-square overflow-hidden border border-border/40 hover:border-foreground transition-colors">
+                  <Image src={src} alt="" fill className="object-cover" sizes="12vw" />
+                </button>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </div>
 

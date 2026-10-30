@@ -21,25 +21,15 @@ export function applyDocumentLang(code: string) {
   document.cookie = `tf-lang=${encodeURIComponent(code)};path=/;max-age=31536000;samesite=lax`;
 }
 
-function isEnabledLanguage(code: string) {
-  return site.languages.some((item) => item.code === code && item.enabled);
-}
-
 function read() {
   if (memory) return memory;
   if (typeof window === "undefined") return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY) || "en";
-  if (isLangCode(stored) && isEnabledLanguage(stored)) {
-    memory = stored;
-  } else {
-    memory = "en";
-    window.localStorage.setItem(STORAGE_KEY, "en");
-  }
+  memory = isLangCode(stored) ? stored : "en";
   return memory;
 }
 
 function write(code: string) {
-  if (!isLangCode(code) || !isEnabledLanguage(code)) return;
   memory = code;
   if (typeof window !== "undefined") {
     window.localStorage.setItem(STORAGE_KEY, code);

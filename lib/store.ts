@@ -52,16 +52,16 @@ function loadDb(): Database {
   return memory.__tfMemory;
 }
 
-function shouldUseSupabaseReads() {
+function useSupabaseReads() {
   return isSupabaseConfigured();
 }
 
-function shouldUseSupabaseWrites() {
+function useSupabaseWrites() {
   return isSupabaseAdminConfigured();
 }
 
 export async function listProducts(query?: ProductQuery) {
-  if (shouldUseSupabaseReads()) {
+  if (useSupabaseReads()) {
     try {
       return await queryProducts(query);
     } catch (error) {
@@ -72,7 +72,7 @@ export async function listProducts(query?: ProductQuery) {
 }
 
 export async function getProductBySlug(slug: string) {
-  if (shouldUseSupabaseReads()) {
+  if (useSupabaseReads()) {
     try {
       return await fetchProductBySlug(slug);
     } catch (error) {
@@ -83,7 +83,7 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getProductById(id: string) {
-  if (shouldUseSupabaseReads()) {
+  if (useSupabaseReads()) {
     try {
       return await fetchProductById(id);
     } catch (error) {
@@ -94,14 +94,14 @@ export async function getProductById(id: string) {
 }
 
 export async function createProduct(input: Product) {
-  if (shouldUseSupabaseWrites()) return insertProduct(input);
+  if (useSupabaseWrites()) return insertProduct(input);
   const db = loadDb();
   db.products.unshift(input);
   return input;
 }
 
 export async function updateProduct(id: string, patch: Partial<Product>) {
-  if (shouldUseSupabaseWrites()) return patchProduct(id, patch);
+  if (useSupabaseWrites()) return patchProduct(id, patch);
   const db = loadDb();
   const index = db.products.findIndex((product) => product.id === id);
   if (index === -1) return null;
@@ -110,7 +110,7 @@ export async function updateProduct(id: string, patch: Partial<Product>) {
 }
 
 export async function deleteProduct(id: string) {
-  if (shouldUseSupabaseWrites()) return removeProduct(id);
+  if (useSupabaseWrites()) return removeProduct(id);
   const db = loadDb();
   const next = db.products.filter((product) => product.id !== id);
   if (next.length === db.products.length) return false;
@@ -119,22 +119,22 @@ export async function deleteProduct(id: string) {
 }
 
 export async function listOrders() {
-  if (shouldUseSupabaseWrites()) return fetchOrders();
+  if (useSupabaseWrites()) return fetchOrders();
   return loadDb().orders;
 }
 
 export async function getOrder(id: string) {
-  if (shouldUseSupabaseWrites()) return fetchOrderById(id);
+  if (useSupabaseWrites()) return fetchOrderById(id);
   return loadDb().orders.find((order) => order.id === id) ?? null;
 }
 
 export async function findOrderByPaymentIntent(id: string) {
-  if (shouldUseSupabaseWrites()) return fetchOrderByPaymentIntent(id);
+  if (useSupabaseWrites()) return fetchOrderByPaymentIntent(id);
   return loadDb().orders.find((order) => order.stripePaymentIntentId === id) ?? null;
 }
 
 export async function placeHouseOrder(input: PlaceOrderInput): Promise<Order> {
-  if (shouldUseSupabaseWrites()) return placeOrderRpc(input);
+  if (useSupabaseWrites()) return placeOrderRpc(input);
 
   const db = loadDb();
   const priced: Order["items"] = [];
@@ -209,7 +209,7 @@ export async function createOrder(order: Order) {
 }
 
 export async function updateOrderStatus(id: string, status: Order["status"]) {
-  if (shouldUseSupabaseWrites()) return patchOrderStatus(id, status);
+  if (useSupabaseWrites()) return patchOrderStatus(id, status);
   const order = loadDb().orders.find((entry) => entry.id === id);
   if (!order) return null;
   order.status = status;
@@ -217,11 +217,11 @@ export async function updateOrderStatus(id: string, status: Order["status"]) {
 }
 
 export async function addSubscriber(email: string) {
-  if (shouldUseSupabaseWrites()) {
+  if (useSupabaseWrites()) {
     const { subscriber } = await insertSubscriber(email);
     return subscriber;
   }
-  if (shouldUseSupabaseReads()) {
+  if (useSupabaseReads()) {
     try {
       const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
@@ -241,13 +241,13 @@ export async function addSubscriber(email: string) {
 }
 
 export async function listSubscribers() {
-  if (shouldUseSupabaseWrites()) return fetchSubscribers();
+  if (useSupabaseWrites()) return fetchSubscribers();
   return loadDb().subscribers;
 }
 
 export async function addMessage(message: ContactMessage) {
-  if (shouldUseSupabaseWrites()) return insertMessage(message);
-  if (shouldUseSupabaseReads()) {
+  if (useSupabaseWrites()) return insertMessage(message);
+  if (useSupabaseReads()) {
     try {
       const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
@@ -270,7 +270,7 @@ export async function addMessage(message: ContactMessage) {
 }
 
 export async function listMessages() {
-  if (shouldUseSupabaseWrites()) return fetchMessages();
+  if (useSupabaseWrites()) return fetchMessages();
   return loadDb().messages;
 }
 
@@ -295,7 +295,7 @@ export async function updateCustomerPassword(identifier: string, password: strin
 }
 
 export async function listOrdersForCustomer(identifier: string) {
-  if (shouldUseSupabaseWrites()) return fetchOrdersForCustomer(identifier);
+  if (useSupabaseWrites()) return fetchOrdersForCustomer(identifier);
   return loadDb().orders.filter(
     (order) =>
       order.customer.email.toLowerCase() === identifier.toLowerCase() ||

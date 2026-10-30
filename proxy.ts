@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ADMIN_COOKIE, ADMIN_COOKIE_VALUE, isAdminClaim } from "@/lib/auth";
+import { isAdminClaim } from "@/lib/auth";
+import { ADMIN_COOKIE, verifyAdminToken } from "@/lib/admin-token";
 import { isMaintenanceMode } from "@/lib/storefront-config";
 import { updateSession } from "@/lib/supabase/middleware";
 
@@ -38,7 +39,7 @@ export async function proxy(request: NextRequest) {
     return supabaseResponse;
   }
 
-  const houseKey = request.cookies.get(ADMIN_COOKIE)?.value === ADMIN_COOKIE_VALUE;
+  const houseKey = await verifyAdminToken(request.cookies.get(ADMIN_COOKIE)?.value);
   if (houseKey || isAdminClaim(claims)) {
     return supabaseResponse;
   }

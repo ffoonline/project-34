@@ -25,24 +25,31 @@ export function LanguageSwitcher({
   compact?: boolean;
 }) {
   const { language, setLanguage, current, t } = useLanguage();
+  const codeLabel = (code: string) => code === "en" ? "EN" : code === "fa-AF" ? "فا" : "پش";
+  const triggerLabel = codeLabel(current.code);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
+          size={compact ? "icon" : "sm"}
           className={cn(
-            compact ? "h-10 min-w-10 px-2 sm:h-11" : "h-8 gap-1.5 px-2",
+            compact ? "size-10 sm:size-11" : "h-8 gap-1.5 px-2",
             invert &&
               "text-white hover:bg-white/10 hover:text-white aria-expanded:bg-white/10 aria-expanded:text-white",
           )}
-          aria-label={`${t("language")}, ${current.label}`}
+          aria-label={`${t("language")}, ${current.native}`}
+          aria-haspopup="listbox"
         >
-          <span className="text-[11px] font-semibold tracking-[0.14em] uppercase">
-            {current.display}
-          </span>
-          {compact ? null : <ChevronDown className="size-3 opacity-60" />}
+          {compact ? null : (
+            <>
+              <span className="text-[11px] font-semibold tracking-[0.14em] uppercase">
+                {triggerLabel}
+              </span>
+              <ChevronDown className="size-3 opacity-60" />
+            </>
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align} className="min-w-52 rounded-none p-1">
@@ -55,13 +62,14 @@ export function LanguageSwitcher({
             <DropdownMenuRadioItem
               key={item.code}
               value={item.code}
-              disabled={!item.enabled}
               className="rounded-none py-2.5 pr-8"
             >
-              <span className="flex flex-col">
-                <span className="text-sm">{item.display}</span>
-                <span className="text-[11px] tracking-[0.12em] text-muted-foreground">
-                  {item.enabled ? item.label : "Coming soon"}
+              <span className="flex items-center gap-2.5">
+                <span className="flex flex-col">
+                  <span className="text-sm">{codeLabel(item.code)}</span>
+                  <span className="text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
+                    {item.label}
+                  </span>
                 </span>
               </span>
             </DropdownMenuRadioItem>

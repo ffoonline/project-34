@@ -24,6 +24,9 @@ export function AboutPageBody() {
         <p className="mt-8 max-w-xl text-[17px] leading-8 text-muted-foreground">
           <T k="houseStory" />
         </p>
+        <p className="mt-7 text-[11px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+          Founder — Ajmal Arash
+        </p>
       </section>
 
       <div className="relative h-[68vh] min-h-96">
@@ -46,12 +49,8 @@ export function AboutPageBody() {
           {t("atelierAddress")}
           <br />
           WhatsApp {site.whatsappDisplay}
-          {site.email ? (
-            <>
-              <br />
-              {site.email}
-            </>
-          ) : null}
+          <br />
+          {site.email}
         </p>
         <Link href="/contact" className="text-link mt-8">
           <T k="writeTheHouse" />

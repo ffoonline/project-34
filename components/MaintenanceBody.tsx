@@ -21,14 +21,12 @@ export function MaintenanceBody() {
         >
           WhatsApp {site.whatsappDisplay}
         </a>
-        {site.email ? (
-          <a
-            href={`mailto:${site.email}`}
-            className="border border-border px-6 py-3 text-[11px] tracking-[0.22em] uppercase"
-          >
-            {site.email}
-          </a>
-        ) : null}
+        <a
+          href={`mailto:${site.email}`}
+          className="border border-border px-6 py-3 text-[11px] tracking-[0.22em] uppercase"
+        >
+          {site.email}
+        </a>
       </div>
       <Link
         href="/login"

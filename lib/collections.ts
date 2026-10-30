@@ -22,7 +22,7 @@ export const houseCollections = [
     title: "Fragrance Edit",
     kicker: "Signature",
     story: "Two scents. The rest of the cabinet can wait.",
-    image: "/images/placeholders/fragrance-bottle.jpg",
+    image: "/catalog/signature-34.jpg",
     match: (product: Product) => product.collection === "signature",
   },
   {

@@ -1,305 +1,132 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Moon, Search, Sun } from "lucide-react";
+import { ArrowRight, Heart, Mail, ShoppingBag } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCurrency } from "@/context/CurrencyContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { site } from "@/lib/site";
 import type { CopyKey } from "@/lib/i18n";
 import type { CurrencyCode } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Logo } from "@/components/Logo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { SearchOverlay } from "@/components/SearchOverlay";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Logo } from "@/components/Logo";
+import { WhatsAppIcon } from "@/components/HouseIcons";
 
 const nav: { href: string; key: CopyKey }[] = [
   { href: "/shop?sort=new", key: "newArrivals" },
   { href: "/shop/men", key: "men" },
   { href: "/shop/women", key: "women" },
   { href: "/shop/kids", key: "kids" },
-  { href: "/shop/fragrance", key: "fragrance" },
-  { href: "/shop/beauty", key: "beauty" },
-  { href: "/shop/accessories", key: "accessories" },
+  { href: "/shop/accessories", key: "handcraft" },
+  { href: "/shop/fragrance", key: "beauties" },
 ];
-
 const iconBtn = "size-10 sm:size-11 [&_svg]:size-[18px]";
-
 function TwoLineMenu() {
-  return (
-    <span className="flex h-6 w-7 flex-col justify-center gap-[7px]" aria-hidden>
-      <span className="block h-px w-full bg-current" />
-      <span className="block h-px w-full bg-current" />
-    </span>
-  );
+  return <span className="flex h-6 w-7 flex-col justify-center gap-[7px]" aria-hidden><span className="block h-px w-full bg-current" /><span className="block h-px w-full bg-current" /></span>;
 }
-
-export function Header({ saleEnabled = true }: { saleEnabled?: boolean }) {
+function linkIsActive(href: string, pathname: string) {
+  const path = href.split("?")[0];
+  return path === "/shop" && href.includes("sort=new") ? pathname === "/shop" : pathname === path || (path !== "/shop" && pathname.startsWith(`${path}/`));
+}
+export function Header(_props: { saleEnabled?: boolean }) {
+  void _props;
   const { ids } = useWishlist();
+  const { count } = useCart();
   const { currency, setCurrency } = useCurrency();
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const { isLoggedIn } = useAuth();
-  const { t, rtl, setLanguage, language } = useLanguage();
+  const { t, rtl } = useLanguage();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const night = resolvedTheme === "dark" || theme === "dark";
-
   const onHome = pathname === "/";
   const overlay = onHome && !scrolled;
-
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 12);
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
-
   useEffect(() => {
     document.documentElement.toggleAttribute("data-hero-overlay", overlay);
     return () => document.documentElement.removeAttribute("data-hero-overlay");
   }, [overlay]);
-
-  const wordmark = (
-    <Link
-      href="/"
-      className="wordmark font-heading whitespace-nowrap text-[15px] font-medium tracking-[0.28em] uppercase sm:text-base sm:tracking-[0.36em]"
-      aria-label={t("thirtyFourHome")}
-    >
-      THIRTY FOUR
+  const brand = (
+    <Link href="/" className="header-brand" aria-label={t("thirtyFourHome")}>
+      <Logo invert={overlay || night} size={38} priority={onHome} className="header-brand__logo" />
+      <span>THIRTY FOUR</span>
     </Link>
   );
-
   return (
-    <header
-      data-site-header
-      data-overlay={overlay ? "true" : undefined}
-      className={cn(
-        "sticky top-0 z-40 transition-colors duration-300",
-        overlay ? "bg-transparent text-[#f7f4ef]" : "bg-background text-foreground",
-        scrolled && !overlay && "border-b border-border/70",
-      )}
-    >
-      <div className="mx-auto flex h-[3.75rem] max-w-[1440px] items-center justify-between gap-2 px-3 sm:h-16 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="flex min-w-0 items-center gap-1 sm:gap-2">
+    <header data-site-header data-overlay={overlay ? "true" : undefined} className={cn("sticky top-0 z-40 transition-colors duration-300", overlay ? "bg-transparent text-white" : "bg-background text-foreground", scrolled && !overlay && "border-b border-border/70")}>
+      <div className="mx-auto grid h-[3.75rem] max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-1 px-3 sm:h-16 sm:px-6">
+        <div className="flex min-w-0 items-center">
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn("size-11 shrink-0", overlay && "hover:bg-white/10 hover:text-[#f7f4ef]")}
-                aria-label={t("openMenu")}
-                aria-expanded={menuOpen}
-              >
-                <TwoLineMenu />
-              </Button>
+              <Button variant="ghost" size="icon" className={cn("size-11 shrink-0", overlay && "hover:bg-white/10 hover:text-white")} aria-label={t("openMenu")} aria-expanded={menuOpen}><TwoLineMenu /></Button>
             </SheetTrigger>
-            <SheetContent
-              side={rtl ? "right" : "left"}
-              className="w-full gap-0 bg-background p-0 sm:max-w-sm"
-              onCloseAutoFocus={(event) => event.preventDefault()}
-            >
-              <SheetHeader className="flex-row items-center gap-2 px-3 py-3 pr-12">
+            <SheetContent side={rtl ? "right" : "left"} className="w-full gap-0 overflow-y-auto bg-background p-0 sm:max-w-sm" onCloseAutoFocus={(event) => event.preventDefault()}>
+              <SheetHeader className="items-center gap-0 px-5 pb-4 pt-7">
                 <SheetTitle className="sr-only">{t("menu")}</SheetTitle>
-                <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-                  <Logo size={36} className="h-9 w-9 shrink-0" />
-                  <span className="font-heading text-sm tracking-[0.22em] uppercase">THIRTY FOUR</span>
+                <Link href="/" className="flex flex-col items-center gap-1" onClick={() => setMenuOpen(false)}>
+                  <Logo invert={night} size={52} className="size-11" />
+                  <span className="font-heading text-xl font-semibold tracking-[0.15em] uppercase">THIRTY FOUR</span>
                 </Link>
-                <Select value={currency} onValueChange={(value) => setCurrency(value as CurrencyCode)}>
-                  <SelectTrigger size="sm" className="ms-auto h-8 w-[4.5rem] shrink-0 bg-transparent" aria-label={t("currencyLabel")}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {site.currencies.map((code) => (
-                      <SelectItem key={code} value={code}>
-                        {code}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  <LanguageSwitcher />
+                  <Select value={currency} onValueChange={(value) => setCurrency(value as CurrencyCode)}>
+                    <SelectTrigger size="sm" className="h-8 w-[4.5rem] bg-transparent" aria-label={t("currencyLabel")}><SelectValue /></SelectTrigger>
+                    <SelectContent>{site.currencies.map((code) => <SelectItem key={code} value={code}>{code}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
               </SheetHeader>
-
-              <nav className="mt-6 flex flex-1 flex-col gap-5 overflow-y-auto px-6 pb-2">
-                {nav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="font-heading text-3xl tracking-[-0.03em]"
-                    aria-current={pathname.startsWith(item.href.split("?")[0]) ? "page" : undefined}
-                  >
-                    {t(item.key)}
-                  </Link>
-                ))}
-                {saleEnabled ? (
-                  <Link href="/shop/sale" onClick={() => setMenuOpen(false)} className="font-heading text-3xl text-oxblood">
-                    {t("sale")}
-                  </Link>
-                ) : null}
-                <div className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
-                  <Link href="/journal" onClick={() => setMenuOpen(false)}>
-                    {t("journal")}
-                  </Link>
-                  <Link href="/about" onClick={() => setMenuOpen(false)}>
-                    {t("about")}
-                  </Link>
-                  <Link href="/contact" onClick={() => setMenuOpen(false)}>
-                    {t("contact")}
-                  </Link>
-                  <Link href="/wishlist" onClick={() => setMenuOpen(false)}>
-                    {t("wishlist")}
-                  </Link>
-                  <Link href="/cart" onClick={() => setMenuOpen(false)}>
-                    {t("bag")}
-                  </Link>
-                </div>
-                <div className="mt-8 border-t border-border pt-6">
-                  <p className="kicker">{t("language")}</p>
-                  <div className="mt-4 flex flex-col gap-3">
-                    {site.languages.map((item) => (
-                      <button
-                        key={item.code}
-                        type="button"
-                        disabled={!item.enabled}
-                        onClick={() => setLanguage(item.code)}
-                        className={
-                          language === item.code
-                            ? "flex items-center gap-3 text-start text-foreground"
-                            : "flex items-center gap-3 text-start text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                        }
-                      >
-                        <span>
-                          <span className="block text-base">{item.display}</span>
-                          <span className="text-[11px] text-muted-foreground">
-                            {item.enabled ? item.label : "Coming soon"}
-                          </span>
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              <nav aria-label={t("menu")} className="mt-2 flex flex-col px-6">
+                {nav.map((item) => {
+                  const active = linkIsActive(item.href, pathname);
+                  return <Link key={item.key} href={item.href} onClick={() => setMenuOpen(false)} className="header-menu-link" aria-current={active ? "page" : undefined}><span>{t(item.key)}</span><ArrowRight aria-hidden className="header-menu-link__arrow" size={15} strokeWidth={1.5} /></Link>;
+                })}
               </nav>
-
-              <SheetFooter className="mt-auto flex flex-col gap-2 p-4 pb-8">
-                {isLoggedIn ? (
-                  <Button asChild className="h-12 w-full text-[12px] tracking-[0.16em] uppercase">
-                    <Link href="/account" onClick={() => setMenuOpen(false)}>
-                      {t("account")}
-                    </Link>
-                  </Button>
-                ) : (
-                  <>
-                    <Button asChild className="h-12 w-full text-[12px] tracking-[0.16em] uppercase">
-                      <Link href="/account/login" onClick={() => setMenuOpen(false)}>
-                        {t("login")}
-                      </Link>
-                    </Button>
-                    <Button asChild variant="secondary" className="h-12 w-full text-[12px] tracking-[0.16em] uppercase">
-                      <Link href="/account/signup" onClick={() => setMenuOpen(false)}>
-                        {t("signUp")}
-                      </Link>
-                    </Button>
-                  </>
-                )}
+              <div className="mx-6 mt-7 grid grid-cols-2 gap-2">
+                <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer" className="header-contact-link"><WhatsAppIcon className="size-4" />WhatsApp</a>
+                <a href={`mailto:${site.email}`} className="header-contact-link"><Mail aria-hidden size={16} strokeWidth={1.6} />{t("email")}</a>
+              </div>
+              <div className="mx-6 mt-7 border-t border-border pt-5">
+                <p className="kicker">{t("settings")}</p>
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  <Button type="button" variant={theme === "light" ? "default" : "outline"} aria-pressed={theme === "light"} onClick={() => setTheme("light")} className="h-9 rounded-md px-2 text-xs">{t("lightTheme")}</Button>
+                  <Button type="button" variant={theme === "dark" ? "default" : "outline"} aria-pressed={theme === "dark"} onClick={() => setTheme("dark")} className="h-9 rounded-md px-2 text-xs">{t("darkTheme")}</Button>
+                  <Button type="button" variant={theme === "custom" ? "default" : "outline"} aria-pressed={theme === "custom"} onClick={() => setTheme("custom")} className="h-9 rounded-md px-2 text-xs">{t("customTheme")}</Button>
+                </div>
+              </div>
+              <SheetFooter className="mt-7 p-6 pt-0">
+                <Button asChild className="h-12 w-full rounded-[0.9rem] text-[11px] tracking-[0.16em] uppercase"><Link href="/shop" onClick={() => setMenuOpen(false)}>{t("enterTheHouse")}<ArrowRight aria-hidden className="ms-2 size-4" /></Link></Button>
               </SheetFooter>
             </SheetContent>
           </Sheet>
-          {wordmark}
         </div>
-
-        <nav className="hidden items-center gap-7 lg:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-[11px] font-semibold tracking-[0.18em] uppercase transition-colors",
-                overlay
-                  ? "text-[#f7f4ef]/70 hover:text-[#f7f4ef]"
-                  : pathname.startsWith(item.href.split("?")[0]) && item.href !== "/shop?sort=new"
-                    ? "text-foreground"
-                    : "text-foreground/55 hover:text-foreground",
-              )}
-              aria-current={
-                pathname.startsWith(item.href.split("?")[0]) && item.href !== "/shop?sort=new"
-                  ? "page"
-                  : undefined
-              }
-            >
-              {t(item.key)}
-            </Link>
-          ))}
-          {saleEnabled ? (
-            <Link
-              href="/shop/sale"
-              className={cn(
-                "text-[11px] font-semibold tracking-[0.18em] uppercase",
-                overlay ? "text-[#e8d2c8]" : "text-oxblood",
-              )}
-            >
-              {t("sale")}
-            </Link>
-          ) : null}
-        </nav>
-
+        {brand}
         <div className="flex shrink-0 items-center justify-end gap-0.5">
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(iconBtn, overlay && "hover:bg-white/10 hover:text-[#f7f4ef]")}
-            aria-label={t("searchTheHouse")}
-            onClick={() => setSearchOpen(true)}
-          >
-            <Search strokeWidth={1.6} />
+          <Button variant="ghost" size="icon" className={cn(iconBtn, "relative hidden lg:inline-flex", overlay && "hover:bg-white/10 hover:text-white")} asChild>
+            <Link href="/wishlist" aria-label={t("wishlist")}><Heart strokeWidth={1.6} />{ids.length > 0 ? <span className="absolute top-2.5 right-2.5 size-1.5 rounded-full bg-current" /> : null}</Link>
           </Button>
-          <LanguageSwitcher compact align="end" invert={overlay} />
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(iconBtn, overlay && "hover:bg-white/10 hover:text-[#f7f4ef]")}
-            aria-label={night ? t("lightTheme") : t("darkTheme")}
-            onClick={() => setTheme(night ? "light" : "dark")}
-          >
-            <Sun className="size-[18px] dark:hidden" strokeWidth={1.6} />
-            <Moon className="hidden size-[18px] dark:block" strokeWidth={1.6} />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(iconBtn, "relative hidden lg:inline-flex", overlay && "hover:bg-white/10 hover:text-[#f7f4ef]")}
-            asChild
-          >
-            <Link href="/wishlist" aria-label={t("wishlist")}>
-              <Heart className="size-[18px]" strokeWidth={1.6} />
-              {ids.length > 0 ? (
-                <span className="absolute top-2.5 right-2.5 size-1.5 rounded-full bg-current" />
-              ) : null}
-            </Link>
+          <Button variant="ghost" size="icon" className={cn(iconBtn, "relative", overlay && "hover:bg-white/10 hover:text-white")} asChild>
+            <Link href="/cart" aria-label={`${t("bag")}${count > 0 ? `, ${count}` : ""}`}><ShoppingBag strokeWidth={1.6} style={{ width: 21, height: 21 }} />{count > 0 ? <span className="absolute -top-0.5 -end-0.5 flex size-4 items-center justify-center rounded-full bg-foreground text-[9px] font-semibold text-background">{count > 9 ? "9+" : count}</span> : null}</Link>
           </Button>
         </div>
       </div>
-      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
+      <nav aria-label={t("collections")} className="header-category-row mx-auto hidden max-w-[1440px] items-center justify-center gap-4 px-6 pb-3 lg:flex xl:gap-5">
+        {nav.map((item) => {
+          const active = linkIsActive(item.href, pathname);
+          return <Link key={item.key} href={item.href} className="header-category-link" aria-current={active ? "page" : undefined}><span>{t(item.key)}</span><ArrowRight aria-hidden className="header-category-link__arrow" size={12} strokeWidth={1.6} /></Link>;
+        })}
+      </nav>
     </header>
   );
 }

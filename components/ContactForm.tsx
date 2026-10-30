@@ -55,13 +55,11 @@ export function ContactForm() {
           <p className="mt-2 font-heading text-2xl">{site.whatsappDisplay}</p>
           <p className="mt-2 text-sm text-muted-foreground">{t("liveThread")}</p>
         </a>
-        {site.email ? (
-          <a className="border border-border p-5 hover:border-foreground" href={`mailto:${site.email}`}>
-            <p className="text-[11px] tracking-[0.22em] uppercase">{t("email")}</p>
-            <p className="mt-2 font-heading text-2xl break-all">{site.email}</p>
-            <p className="mt-2 text-sm text-muted-foreground">{t("lookbooksWholesale")}</p>
-          </a>
-        ) : null}
+        <a className="border border-border p-5 hover:border-foreground" href={`mailto:${site.email}`}>
+          <p className="text-[11px] tracking-[0.22em] uppercase">{t("email")}</p>
+          <p className="mt-2 font-heading text-2xl break-all">{site.email}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{t("lookbooksWholesale")}</p>
+        </a>
       </div>
       <form onSubmit={onSubmit} className="grid gap-4">
         <div className="grid gap-4 sm:grid-cols-2">

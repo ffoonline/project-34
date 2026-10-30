@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       });
     }
 
-    if (password === adminPassword()) {
+    if (adminPassword() && password === adminPassword()) {
       await setAdminCookie();
       return NextResponse.json({ ok: true, role: "admin" });
     }

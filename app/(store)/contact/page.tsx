@@ -43,16 +43,14 @@ export default function ContactPage() {
               </a>
             </dd>
           </div>
-          {site.email ? (
-            <div>
-              <dt className="text-[11px] tracking-[0.22em] uppercase">
-                <T k="email" />
-              </dt>
-              <dd className="mt-1">
-                <a href={`mailto:${site.email}`}>{site.email}</a>
-              </dd>
-            </div>
-          ) : null}
+          <div>
+            <dt className="text-[11px] tracking-[0.22em] uppercase">
+              <T k="email" />
+            </dt>
+            <dd className="mt-1">
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </dd>
+          </div>
           <div>
             <dt className="text-[11px] tracking-[0.22em] uppercase">
               <T k="phone" />
