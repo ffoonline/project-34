@@ -23,7 +23,6 @@ Storefront chrome is **English**, **Dari (دری)**, and **Pashto (پښتو)** f
 | Env | Purpose | Local fallback |
 | --- | --- | --- |
 | `ADMIN_PASSWORD` | Optional atelier login fallback when Supabase is unset | unset (login disabled) |
-| `ADMIN_EMAIL` | First account promoted to admin | unset |
 | `CUSTOMER_SESSION_SECRET` | Encrypts/authenticates 30-day customer identity cookies (at least 32 random bytes) | required for customer sign-in |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL | `http://127.0.0.1:43134` |
 | `NEXT_PUBLIC_WHATSAPP` | WhatsApp digits, no plus | `4915217251813` |
@@ -52,13 +51,15 @@ Customer sign-in requires a separate `CUSTOMER_SESSION_SECRET` containing at lea
 
 `proxy.ts` (Next.js 16 session layer; there is no `middleware.js`) refreshes Supabase cookies and checks admin role via JWT `app_metadata.role` plus the house cookie. The shop stays open.
 
+Public signup and email matching never grant admin access. Provision admins through a trusted Supabase admin operation after verifying the account owner; set `app_metadata.role` using the Dashboard or a protected server-side admin process. Never expose `SUPABASE_SERVICE_ROLE_KEY`.
+
 Supabase clients live in `lib/supabase/` (browser, server, service-role admin). The service role is used only on the server for `place_order`, catalogue seed, and admin writes.
 
 ## Deploy on Vercel
 
 1. Create a Supabase project. In the SQL editor, run [`supabase/schema.sql`](supabase/schema.sql) (tables, RLS, `shop.place_order` transaction).
-2. Confirm **Email** auth is on. Turn off “Confirm email” if you want local sign-up without a mailer.
-3. Set `ADMIN_EMAIL` to the first atelier address. That account is promoted to `profiles.role = admin` and `app_metadata.role = admin` on sign-in.
+2. Confirm **Email** auth is on. Keep email confirmation enabled in production so signup is not treated as proof of inbox ownership.
+3. Provision each administrator through a trusted Supabase admin operation after verifying the account owner; set `app_metadata.role` to `admin`. Do not grant admin privileges from public signup or by matching a submitted email address.
 4. In Vercel: import the repo, Framework Preset **Next.js**, then add the keys from `.env.example`. Do not add `SUPABASE_SERVICE_ROLE_KEY` as a `NEXT_PUBLIC_` variable.
 5. Deploy. Route Handlers are serverless — there is no Express process and no `data/runtime.json`.
 6. Optional: `stripe projects env --pull` if hosting / PostHog were provisioned with Stripe Projects.

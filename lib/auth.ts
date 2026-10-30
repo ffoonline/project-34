@@ -14,10 +14,6 @@ export function adminPassword() {
   return process.env.ADMIN_PASSWORD || "";
 }
 
-export function adminEmail() {
-  return process.env.ADMIN_EMAIL?.trim().toLowerCase() || "";
-}
-
 export async function setAdminCookie() {
   const token = await createAdminToken();
   if (!token) {
@@ -73,23 +69,6 @@ export async function sessionHasAdminRole(user: User | null) {
   } catch {
     return false;
   }
-}
-
-export async function promoteAdminIfNeeded(user: User) {
-  const expected = adminEmail();
-  if (!expected || user.email?.toLowerCase() !== expected) return false;
-  const { createAdminClient } = await import("./supabase/admin");
-  const admin = createAdminClient();
-  if (!admin) return false;
-  await admin.from("profiles").upsert({
-    id: user.id,
-    email: user.email,
-    role: "admin",
-  });
-  await admin.auth.admin.updateUserById(user.id, {
-    app_metadata: { ...(user.app_metadata ?? {}), role: "admin" },
-  });
-  return true;
 }
 
 export async function isAdmin() {
