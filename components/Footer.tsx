@@ -5,7 +5,7 @@ import type { CopyKey } from "@/lib/i18n";
 import { useLanguage } from "@/context/LanguageContext";
 import { NewsletterForm } from "./NewsletterForm";
 import { Logo } from "./Logo";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/HouseIcons";
 const columns: { title: CopyKey; links: { href: string; key: CopyKey }[] }[] = [
   { title: "shop", links: [
@@ -22,12 +22,17 @@ const columns: { title: CopyKey; links: { href: string; key: CopyKey }[] }[] = [
     { href: "/privacy", key: "privacy" }, { href: "/terms", key: "terms" }, { href: "/cookies", key: "cookies" },
   ] },
 ];
+const footerLanguages = [
+  { code: "en", label: "ENG" },
+  { code: "fa-AF", label: "فارسی" },
+  { code: "ps", label: "پښتو" },
+] as const;
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   return (
-    <footer className="mt-auto bg-black text-white">
+    <footer className="site-footer mt-auto bg-black text-white">
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 sm:py-14">
-        <div className="flex items-center gap-3 sm:gap-4"><Logo invert size={56} className="h-12 w-12 shrink-0 bg-transparent sm:h-14 sm:w-14" /><p className="font-heading text-lg font-semibold tracking-[0.18em] uppercase sm:text-2xl sm:tracking-[0.22em]">{site.legal}</p></div>
+        <div className="flex items-center gap-3 sm:gap-4"><Logo invert size={56} className="h-12 w-12 shrink-0 bg-transparent sm:h-14 sm:w-14" /><p className="footer__heading text-[#E3B15B] font-heading text-lg font-semibold tracking-[0.18em] uppercase sm:text-2xl sm:tracking-[0.22em]">{site.legal}</p></div>
         <div className="mt-8 grid gap-9 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="max-w-sm text-sm leading-7 text-white/65">{t("tagline")}</p>
@@ -37,18 +42,24 @@ export function Footer() {
                 <span aria-hidden className="text-white/30">·</span><a href={`mailto:${site.email}`} className="hover:text-white">{site.email}</a>
               </span>
             </p>
-            <div className="mt-7 max-w-sm"><p className="mb-3 text-[11px] tracking-[0.2em] uppercase text-white/45">{t("nextCut")}</p><NewsletterForm invert /></div>
+            <div className="mt-7 max-w-sm"><p className="footer__heading mb-3 text-[11px] tracking-[0.2em] uppercase text-[#E3B15B]">{t("nextCut")}</p><NewsletterForm compact invert rounded /></div>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:col-span-8 lg:grid-cols-4 lg:gap-7">
-            {columns.map((column) => <div key={column.title}><p className="text-[11px] font-semibold tracking-[0.18em] uppercase">{t(column.title)}</p><ul className="mt-4 space-y-3 text-sm text-white/70">{column.links.map((link) => <li key={link.href + link.key}><Link href={link.href} className="hover:text-white">{t(link.key)}</Link></li>)}</ul></div>)}
+            {columns.map((column) => <div key={column.title}><p className="footer__heading text-[#E3B15B] text-[11px] font-semibold tracking-[0.18em] uppercase">{t(column.title)}</p><ul className="mt-4 space-y-3 text-sm text-white/70">{column.links.map((link) => <li key={link.href + link.key}><Link href={link.href} className="hover:text-white">{t(link.key)}</Link></li>)}</ul></div>)}
           </div>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-5 text-[11px] tracking-[0.14em] text-white/45 uppercase sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>© 2026 THIRTY FOUR GLOBAL V2 · {t("allRights")}</p>
-          <div className="flex flex-wrap gap-4 normal-case tracking-normal"><a href={site.instagram}>Instagram</a><a href={site.facebook}>Facebook</a><a href={site.tiktok}>TikTok</a><a href={site.x}>X</a></div>
-          <div className="flex items-center gap-3 normal-case tracking-normal"><LanguageSwitcher invert /></div>
+          <p>© 2026 THIRTY FOUR GLOBAL V3 · {t("allRights")}</p>
+          <div className="flex flex-wrap gap-4 normal-case tracking-normal"><a href={site.instagram}>Instagram</a><a href={site.facebook}>Facebook</a><a href={site.tiktok}>TikTok</a></div>
+          <div role="group" aria-label={t("language")} className="grid w-full grid-cols-3 gap-2 normal-case tracking-normal sm:w-auto">
+            {footerLanguages.map((item) => (
+              <Button key={item.code} type="button" variant="outline" aria-pressed={language === item.code} lang={item.code} onClick={() => setLanguage(item.code)} className={`h-9 min-w-0 rounded-md px-2 text-[11px] ${language === item.code ? "border-white bg-white text-black hover:bg-white/90 hover:text-black" : "border-white/30 bg-transparent text-white/75 hover:bg-white/10 hover:text-white"}`}>
+                {item.label}
+              </Button>
+            ))}
+          </div>
         </div>
         <div className="mx-auto flex max-w-[1440px] flex-col gap-2 px-4 pb-5 pt-0 text-[11px] tracking-[0.08em] text-white/40 sm:flex-row sm:items-center sm:justify-end sm:px-6">
           <p className="normal-case">{t("digitalPartner")} <a href="https://www.finutex.com" target="_blank" rel="noreferrer" className="text-white/65 hover:text-white">FINUTEX</a></p>

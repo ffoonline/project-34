@@ -97,10 +97,10 @@ export function Header(_props: { saleEnabled?: boolean }) {
               </div>
               <div className="mx-6 mt-7 border-t border-border pt-5">
                 <p className="kicker">{t("settings")}</p>
-                <div className="mt-3 grid grid-cols-3 gap-2">
-                  <Button type="button" variant={theme === "light" ? "default" : "outline"} aria-pressed={theme === "light"} onClick={() => setTheme("light")} className="h-9 rounded-md px-2 text-xs">{t("lightTheme")}</Button>
-                  <Button type="button" variant={theme === "dark" ? "default" : "outline"} aria-pressed={theme === "dark"} onClick={() => setTheme("dark")} className="h-9 rounded-md px-2 text-xs">{t("darkTheme")}</Button>
-                  <Button type="button" variant={theme === "custom" ? "default" : "outline"} aria-pressed={theme === "custom"} onClick={() => setTheme("custom")} className="h-9 rounded-md px-2 text-xs">{t("customTheme")}</Button>
+                <div className="menu-theme-buttons mt-3 grid grid-cols-3 gap-2">
+                  <Button type="button" variant={theme === "light" ? "default" : "outline"} aria-label={t("lightTheme")} aria-pressed={theme === "light"} onClick={() => setTheme("light")} className="h-auto min-h-11 min-w-0 flex-1 break-words whitespace-normal rounded-md px-1 py-2 text-center text-[10px] leading-tight">{t("lightTheme")}</Button>
+                  <Button type="button" variant={theme === "dark" ? "default" : "outline"} aria-label={t("darkTheme")} aria-pressed={theme === "dark"} onClick={() => setTheme("dark")} className="h-auto min-h-11 min-w-0 flex-1 break-words whitespace-normal rounded-md px-1 py-2 text-center text-[10px] leading-tight">{t("darkTheme")}</Button>
+                  <Button type="button" variant={theme === "custom" ? "default" : "outline"} aria-label={t("customTheme")} aria-pressed={theme === "custom"} onClick={() => setTheme("custom")} className="h-auto min-h-11 min-w-0 flex-1 break-words whitespace-normal rounded-md px-1 py-2 text-center text-[10px] leading-tight">{t("customTheme")}</Button>
                 </div>
               </div>
               <SheetFooter className="mt-7 p-6 pt-0">

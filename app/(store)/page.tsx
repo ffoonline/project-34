@@ -4,7 +4,6 @@ import { ProductRail } from "@/components/ProductRail";
 import { HomeHero } from "@/components/HomeHero";
 import { HomeStills } from "@/components/HomeStills";
 import { BrandStory } from "@/components/BrandStory";
-import { HouseGallery } from "@/components/HouseGallery";
 import { LineStories } from "@/components/LineStories";
 import { Reveal } from "@/components/Reveal";
 import { T } from "@/components/T";
@@ -88,7 +87,6 @@ export default async function HomePage() {
       </section>
 
       <LineStories />
-      <HouseGallery />
       <BrandStory />
       <HomeSocial />
 

@@ -20,7 +20,6 @@ export const site = {
   instagram: "https://www.instagram.com/thirtyfourglobal?rpxt=MTBqdmo2ZDE0YzZwNg==",
   tiktok: "https://www.tiktok.com/@thirtyfourglobal?_r=1&_t=ZS-9AiMf5rY7XO",
   facebook: "https://www.facebook.com/share/1GsmwCrmeY/",
-  x: "https://x.com/thirtyfourglobal",
   currencies: ["USD", "EUR", "GBP"] as CurrencyCode[],
   defaultCurrency: "USD" as CurrencyCode,
   rates: { USD: 1, EUR: 0.92, GBP: 0.79 } as Record<CurrencyCode, number>,

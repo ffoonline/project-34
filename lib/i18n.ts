@@ -44,7 +44,7 @@ export const dictionaries = {
     saved: "Saved",
     soldThrough: "Sold through",
     shopTheHouse: "Shop the house",
-    modernLuxury: "Class, Beauties & Luxury — Defined by You.",
+    modernLuxury: "One number, every ritual.",
     viewAll: "View all",
     currentCut: "The current cut",
     theHouse: "The house",

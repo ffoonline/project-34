@@ -3,19 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { Logo } from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 export function HomeHero() {
   const { t, rtl } = useLanguage();
-  const [headlineBlue, headlineBlack] = t("modernLuxury").split(" — ");
   return (
     <section className="hero">
-      <div className="hero__media"><Image src="/editorial/house-interior.jpg" alt={t("salonAlt")} fill priority sizes="100vw" /></div>
+      <div className="hero__media"><Image src="/editorial/thirty-four-hero.png" alt="" fill priority sizes="100vw" /></div>
       <div className="hero__veil" aria-hidden />
       <div className="hero__content">
-        <div className="hero__brand"><Logo invert size={88} priority className="hero__mark" /><p className="hero__wordmark">THIRTY FOUR</p></div>
         <p className="hero__eyebrow">{t("cutForKabul")}</p>
-        <h1><span className="hero__headline-blue">{headlineBlue}</span>{headlineBlack ? <> — <span className="hero__headline-black">{headlineBlack}</span></> : null}</h1>
+        <h1>{t("modernLuxury")}</h1>
         <p className="hero__lede">{t("tagline")}</p>
         <Link href="/shop?sort=new" className="hero__cta"><span>{t("shopTheHouse")}</span><ArrowRight aria-hidden className="hero__cta-arrow" size={18} strokeWidth={1.5} /></Link>
         <form action="/shop" method="get" role="search" dir={rtl ? "rtl" : "ltr"} className="hero__search">
