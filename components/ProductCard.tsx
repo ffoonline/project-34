@@ -50,7 +50,7 @@ export function ProductCard({
       color: product.colors[0]?.name ?? "Default",
     });
     flyProductToCart(product.images[0], event.currentTarget);
-    toast.success(t("added"));
+    toast.success(t("addedToBag"));
   }
 
   return (
