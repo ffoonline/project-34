@@ -24,6 +24,7 @@ Storefront chrome is **English**, **Dari (دری)**, and **Pashto (پښتو)** f
 | --- | --- | --- |
 | `ADMIN_PASSWORD` | Optional atelier login fallback when Supabase is unset | unset (login disabled) |
 | `ADMIN_EMAIL` | First account promoted to admin | unset |
+| `CUSTOMER_SESSION_SECRET` | Encrypts/authenticates 30-day customer identity cookies (at least 32 random bytes) | required for customer sign-in |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URL | `http://127.0.0.1:43134` |
 | `NEXT_PUBLIC_WHATSAPP` | WhatsApp digits, no plus | `4915217251813` |
 | `STRIPE_SECRET_KEY` | Card checkout | fails until set |
@@ -46,6 +47,8 @@ Browse, product pages, and add to bag work as a guest. The bag is stored in `loc
 - `/account/login` — customer sign-in
 - `/account/signup` — identifier → OTP → password (phone still works locally)
 - `/login` — atelier. Email + password when Supabase is set; house password `ADMIN_PASSWORD` otherwise. Unauthenticated `/admin` redirects here. Signed-in non-admins are sent home.
+
+Customer sign-in requires a separate `CUSTOMER_SESSION_SECRET` containing at least 32 random bytes. The encrypted customer identity cookie expires after 30 days; rotating the secret invalidates existing customer sessions.
 
 `proxy.ts` (Next.js 16 session layer; there is no `middleware.js`) refreshes Supabase cookies and checks admin role via JWT `app_metadata.role` plus the house cookie. The shop stays open.
 
