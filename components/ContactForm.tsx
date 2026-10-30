@@ -39,28 +39,39 @@ export function ContactForm() {
     event.currentTarget.reset();
   }
 
+  if (!site.publicContactDetailsConfirmed) {
+    return (
+      <div role="note" className="border border-[#E3B15B]/60 bg-[#E3B15B]/[0.08] p-5 sm:p-7">
+        <p className="text-[10px] font-semibold tracking-[0.18em] text-[#8A5B1F] uppercase dark:text-[#E3B15B]">{t("draftOnly")}</p>
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">{t("contactFormPreviewNote")}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-8">
-      <div className="grid gap-3 sm:grid-cols-2">
-        <a
-          className="border border-border p-5 hover:border-foreground"
-          href={whatsappLink("Hello Thirty Four — I have a question from the contact page.")}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <p className="flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase">
-            <WhatsAppIcon className="size-4" />
-            WhatsApp
-          </p>
-          <p className="mt-2 font-heading text-2xl">{site.whatsappDisplay}</p>
-          <p className="mt-2 text-sm text-muted-foreground">{t("liveThread")}</p>
-        </a>
-        <a className="border border-border p-5 hover:border-foreground" href={`mailto:${site.email}`}>
-          <p className="text-[11px] tracking-[0.22em] uppercase">{t("email")}</p>
-          <p className="mt-2 font-heading text-2xl break-all">{site.email}</p>
-          <p className="mt-2 text-sm text-muted-foreground">{t("lookbooksWholesale")}</p>
-        </a>
-      </div>
+      {site.publicContactDetailsConfirmed ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <a
+            className="border border-border p-5 hover:border-foreground"
+            href={whatsappLink("Hello Thirty Four — I have a question from the contact page.")}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p className="flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase">
+              <WhatsAppIcon className="size-4" />
+              WhatsApp
+            </p>
+            <p className="mt-2 font-heading text-2xl">{site.whatsappDisplay}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("liveThread")}</p>
+          </a>
+          <a className="border border-border p-5 hover:border-foreground" href={`mailto:${site.email}`}>
+            <p className="text-[11px] tracking-[0.22em] uppercase">{t("email")}</p>
+            <p className="mt-2 font-heading text-2xl break-all">{site.email}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("lookbooksWholesale")}</p>
+          </a>
+        </div>
+      ) : null}
       <form onSubmit={onSubmit} className="grid gap-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="grid gap-2">

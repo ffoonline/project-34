@@ -11,6 +11,7 @@ export function WhatsAppPrompt() {
   const shown = useRef(false);
 
   useEffect(() => {
+    if (!site.publicContactDetailsConfirmed) return;
     const target = document.getElementById("social-media");
     if (!target) return;
     const observer = new IntersectionObserver(
@@ -26,7 +27,7 @@ export function WhatsAppPrompt() {
     return () => observer.disconnect();
   }, []);
 
-  if (!open) return null;
+  if (!site.publicContactDetailsConfirmed || !open) return null;
 
   return (
     <aside className="whatsapp-prompt" role="status" aria-label="Contact THIRTY FOUR GLOBAL on WhatsApp">

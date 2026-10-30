@@ -10,6 +10,8 @@ const channels = [
 ];
 
 export function HomeSocial() {
+  if (!site.publicContactDetailsConfirmed) return null;
+
   return (
     <section id="social-media" className="house-section social-house-section border-t border-border bg-[#f5f2ed] dark:bg-[#111]">
       <div className="house-wrap grid gap-10 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">

@@ -3,22 +3,17 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import type { CopyKey } from "@/lib/i18n";
-import { faqItems, returnsSections, shippingSections } from "@/lib/copy-pages";
-import { cookiesSections, privacySections, termsSections } from "@/lib/copy-legal";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
-const docs = {
-  shipping: shippingSections,
-  returns: returnsSections,
-  privacy: privacySections,
-  terms: termsSections,
-  cookies: cookiesSections,
-} as const;
+export type DraftPolicyKind = "impressum" | "privacy" | "terms" | "cookies" | "shipping" | "returns";
+
+const pendingMessage: Record<DraftPolicyKind, CopyKey> = {
+  impressum: "merchantDetailsPending",
+  privacy: "privacyDetailsPending",
+  terms: "termsDetailsPending",
+  cookies: "cookieDetailsPending",
+  shipping: "shippingDetailsPending",
+  returns: "returnsDetailsPending",
+};
 
 export function DocPage({
   kicker,
@@ -29,65 +24,56 @@ export function DocPage({
   kicker: CopyKey;
   title: CopyKey;
   date?: boolean;
-  kind: keyof typeof docs;
+  kind: DraftPolicyKind;
 }) {
-  const { t, language } = useLanguage();
-  const sections = docs[kind](language);
+  const { t } = useLanguage();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <article className="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20">
       <p className="kicker">{t(kicker)}</p>
-      <h1 className="font-heading mt-3 text-5xl md:text-6xl">{t(title)}</h1>
-      {date ? <p className="mt-4 text-sm text-muted-foreground">{t("lastUpdated")}</p> : null}
-      <div className="mt-10 space-y-8 text-sm leading-7 text-muted-foreground">
-        {sections.map((section) => (
-          <section key={section.h}>
-            <h2 className="font-heading text-3xl text-foreground">{section.h}</h2>
-            <p className="mt-3">{section.p}</p>
-          </section>
-        ))}
+      <h1 className="font-heading mt-3 max-w-3xl text-5xl leading-[0.98] sm:text-6xl md:text-7xl">{t(title)}</h1>
+      {date ? <p className="mt-4 text-sm text-muted-foreground">{t("draftOnly")}</p> : null}
+
+      <div className="mt-8 border border-[#E3B15B]/60 bg-[#E3B15B]/[0.08] p-5 sm:p-7" role="note">
+        <p className="text-[10px] font-semibold tracking-[0.18em] text-[#8A5B1F] uppercase dark:text-[#E3B15B]">{t("draftOnly")}</p>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-foreground">{t("draftNotice")}</p>
+        <p className="mt-2 max-w-2xl text-sm leading-7 text-muted-foreground">{t("officialCopyPending")}</p>
       </div>
-      {kind === "privacy" ? (
-        <p className="mt-10 text-sm">
-          <Link href="/cookies" className="text-foreground underline">
-            {t("seeCookiePolicy")}
-          </Link>
-        </p>
-      ) : null}
-      {kind === "cookies" || kind === "terms" ? (
-        <p className="mt-10 text-sm">
-          <Link href="/privacy" className="text-foreground underline">
-            {t("seePrivacyPolicy")}
-          </Link>
-        </p>
-      ) : null}
-      {kind === "shipping" ? (
-        <p className="mt-10 text-sm">
-          <Link href="/contact" className="text-foreground underline">
-            {t("contactTheHouse")}
-          </Link>
-        </p>
-      ) : null}
-    </div>
+
+      <section className="mt-10 grid gap-5 border-b border-border pb-8 md:grid-cols-[0.65fr_1.35fr] md:gap-10">
+        <div>
+          <p className="kicker">{t("detailsPending")}</p>
+          <h2 className="font-heading mt-3 text-3xl sm:text-4xl">{t("detailsPending")}</h2>
+        </div>
+        <p className="text-sm leading-7 text-muted-foreground">{t(pendingMessage[kind])}</p>
+      </section>
+      <p className="mt-6 max-w-3xl text-xs leading-6 text-muted-foreground">{t("legalReviewPending")}</p>
+
+      <nav aria-label={t("legal")} className="mt-12 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-5 text-sm">
+        <Link href="/impressum" className="underline underline-offset-4">{t("impressum")}</Link>
+        <Link href="/privacy" className="underline underline-offset-4">{t("privacy")}</Link>
+        <Link href="/cookies" className="underline underline-offset-4">{t("cookies")}</Link>
+        <Link href="/terms" className="underline underline-offset-4">{t("terms")}</Link>
+        <Link href="/shipping" className="underline underline-offset-4">{t("shipping")}</Link>
+        <Link href="/returns" className="underline underline-offset-4">{t("returns")}</Link>
+      </nav>
+    </article>
   );
 }
 
 export function FaqView() {
-  const { t, language } = useLanguage();
-  const items = faqItems(language);
+  const { t } = useLanguage();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <article className="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20">
       <p className="kicker">{t("faq")}</p>
-      <h1 className="font-heading mt-3 text-6xl">{t("faqHeading")}</h1>
-      <Accordion type="single" collapsible className="mt-10" defaultValue="item-0">
-        {items.map((item, index) => (
-          <AccordionItem key={item.q} value={`item-${index}`}>
-            <AccordionTrigger>{item.q}</AccordionTrigger>
-            <AccordionContent>{item.a}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
+      <h1 className="font-heading mt-3 text-5xl sm:text-6xl md:text-7xl">{t("faqHeading")}</h1>
+      <div className="mt-8 border border-[#E3B15B]/60 bg-[#E3B15B]/[0.08] p-5 sm:p-7" role="note">
+        <p className="text-[10px] font-semibold tracking-[0.18em] text-[#8A5B1F] uppercase dark:text-[#E3B15B]">{t("draftOnly")}</p>
+        <p className="mt-3 text-sm leading-7 text-foreground">{t("faqDetailsPending")}</p>
+        <p className="mt-2 text-sm leading-7 text-muted-foreground">{t("officialCopyPending")}</p>
+      </div>
+      <Link href="/contact" className="text-link mt-8 inline-flex">{t("contactUs")}</Link>
+    </article>
   );
 }

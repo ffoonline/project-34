@@ -15,6 +15,7 @@ export const site = {
   whatsappDisplay: "(+49) 1521 7251813",
   phoneDisplay: "(+49) 1521 7251813",
   address: "Atelier 34, Shahr-e-Naw, Kabul, Afghanistan",
+  publicContactDetailsConfirmed: false,
   production: "https://www.thirtyfourglobal.com/",
   store: "https://www.thirty-four.store/",
   instagram: "https://www.instagram.com/thirtyfourglobal?rpxt=MTBqdmo2ZDE0YzZwNg==",

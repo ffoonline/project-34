@@ -3,36 +3,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { lookbook } from "@/lib/catalog";
-import { aboutExtraCopy } from "@/lib/copy-pages";
-import { site } from "@/lib/site";
 import { useLanguage } from "@/context/LanguageContext";
-import { T } from "@/components/T";
+
+const storySections = ["ourStory", "mission", "vision"] as const;
 
 export function AboutPageBody() {
-  const { t, language } = useLanguage();
-  const extra = aboutExtraCopy(language);
+  const { t } = useLanguage();
 
   return (
     <div>
-      <section className="house-wrap house-section sm:px-6">
-        <p className="kicker">
-          <T k="theHouse" />
-        </p>
-        <h1 className="mt-4 max-w-[10ch] text-6xl leading-[0.9] sm:text-7xl md:text-8xl">
-          <T k="aNumberYouCanKeep" />
-        </h1>
-        <p className="mt-8 max-w-xl text-[17px] leading-8 text-muted-foreground">
-          <T k="houseStory" />
-        </p>
-        <p className="mt-7 text-[11px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-          Founder — Ajmal Arash
-        </p>
+      <section className="mx-auto grid max-w-[1440px] gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div>
+          <p className="kicker">{t("about")}</p>
+          <h1 className="font-heading mt-4 max-w-[10ch] text-6xl leading-[0.92] sm:text-7xl md:text-8xl">{t("ourStory")}</h1>
+        </div>
+        <div className="max-w-xl lg:justify-self-end">
+          <p className="text-[10px] font-semibold tracking-[0.18em] text-[#8A5B1F] uppercase dark:text-[#E3B15B]">{t("draftOnly")}</p>
+          <p className="mt-3 text-base leading-8 text-muted-foreground">{t("officialCopyPending")}</p>
+        </div>
       </section>
 
-      <div className="relative h-[68vh] min-h-96">
+      <div className="relative h-[48vh] min-h-72 max-h-[680px] bg-muted sm:h-[62vh]">
         <Image
           src={lookbook.atelier}
-          alt={t("atelierRailAlt")}
+          alt={t("atelierAlt")}
           fill
           className="object-cover"
           sizes="100vw"
@@ -40,21 +34,22 @@ export function AboutPageBody() {
         />
       </div>
 
-      <section className="mx-auto max-w-2xl px-4 py-24 sm:px-6">
-        <h2 className="text-4xl sm:text-5xl">{extra.whyTitle}</h2>
-        <p className="mt-6 text-[16px] leading-8 text-muted-foreground">{extra.whyBody}</p>
-        <h2 className="mt-16 text-4xl sm:text-5xl">{extra.firstTitle}</h2>
-        <p className="mt-6 text-[16px] leading-8 text-muted-foreground">{extra.firstBody}</p>
-        <p className="mt-10 text-sm leading-7 text-muted-foreground">
-          {t("atelierAddress")}
-          <br />
-          WhatsApp {site.whatsappDisplay}
-          <br />
-          {site.email}
-        </p>
-        <Link href="/contact" className="text-link mt-8">
-          <T k="writeTheHouse" />
-        </Link>
+      <section className="mx-auto grid max-w-[1440px] gap-px bg-border px-4 py-14 sm:px-6 sm:py-20 md:grid-cols-3">
+        {storySections.map((key, index) => (
+          <article key={key} className="min-h-52 bg-background p-5 sm:p-8">
+            <p className="text-[10px] tracking-[0.18em] text-muted-foreground uppercase">0{index + 1}</p>
+            <h2 className="font-heading mt-5 text-3xl sm:text-4xl">{t(key)}</h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground">{t("officialCopyPending")}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="mx-auto grid max-w-[1440px] gap-5 border-t border-border px-4 py-14 sm:px-6 sm:py-20 md:grid-cols-[0.7fr_1.3fr] md:items-center">
+        <h2 className="font-heading text-4xl sm:text-5xl">{t("contactUs")}</h2>
+        <div className="max-w-2xl">
+          <p className="text-sm leading-7 text-muted-foreground">{t("contactFormPreviewNote")}</p>
+          <Link href="/contact" className="text-link mt-6 inline-flex">{t("contact")}</Link>
+        </div>
       </section>
     </div>
   );

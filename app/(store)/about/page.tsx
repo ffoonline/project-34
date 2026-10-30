@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { AboutPageBody } from "@/components/AboutExtra";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "The story of THIRTY FOUR GLOBAL — a Kabul house for men, women, and children.",
+  title: "About — Draft",
+  description: "Preview only; the official brand story is pending approval.",
+  robots: { index: false, follow: false },
 };
 
 export default function AboutPage() {

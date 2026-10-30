@@ -1,19 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import posthog from "posthog-js";
-import { useSyncExternalStore } from "react";
-import { readCookieConsent, subscribeCookieConsent } from "@/lib/cookie-consent";
+import {
+  hasCookieConsent,
+  readCookieConsent,
+  subscribeCookieConsent,
+} from "@/lib/cookie-consent";
 
 export function PostHogInit() {
   const consent = useSyncExternalStore(subscribeCookieConsent, readCookieConsent, () => null);
+  const analyticsAllowed = hasCookieConsent(consent, "analytics");
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   const host = process.env.NEXT_PUBLIC_POSTHOG_HOST;
 
   useEffect(() => {
     if (!key || !host) return;
 
-    if (consent !== "all") {
+    if (!analyticsAllowed) {
       if (posthog.__loaded) posthog.opt_out_capturing();
       return;
     }
@@ -28,7 +32,7 @@ export function PostHogInit() {
     } else {
       posthog.opt_in_capturing();
     }
-  }, [consent, key, host]);
+  }, [analyticsAllowed, key, host]);
 
   return null;
 }

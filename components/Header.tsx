@@ -24,9 +24,9 @@ const nav: { href: string; key: CopyKey }[] = [
   { href: "/shop/fragrance", key: "beauties" },
 ];
 const menuLanguages = [
-  { code: "en", label: "ENG" },
-  { code: "fa-AF", label: "فارسی" },
-  { code: "ps", label: "پشتو" },
+  { code: "en", label: "EN" },
+  { code: "fa-AF", label: "دری" },
+  { code: "ps", label: "پښتو" },
 ] as const;
 const iconBtn = "size-10 sm:size-11 [&_svg]:size-[18px]";
 function TwoLineMenu() {
@@ -91,10 +91,12 @@ export function Header(_props: { saleEnabled?: boolean }) {
                   return <Link key={item.key} href={item.href} onClick={() => setMenuOpen(false)} className="header-menu-link" aria-current={active ? "page" : undefined}><span>{t(item.key)}</span><ArrowRight aria-hidden className="header-menu-link__arrow" size={15} strokeWidth={1.5} /></Link>;
                 })}
               </nav>
-              <div className="mx-6 mt-7 grid grid-cols-2 gap-2">
-                <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer" className="header-contact-link"><WhatsAppIcon className="size-4" />WhatsApp</a>
-                <a href={`mailto:${site.email}`} className="header-contact-link"><Mail aria-hidden size={16} strokeWidth={1.6} />{t("email")}</a>
-              </div>
+              {site.publicContactDetailsConfirmed ? (
+                <div className="mx-6 mt-7 grid grid-cols-2 gap-2">
+                  <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer" className="header-contact-link"><WhatsAppIcon className="size-4" />WhatsApp</a>
+                  <a href={`mailto:${site.email}`} className="header-contact-link"><Mail aria-hidden size={16} strokeWidth={1.6} />{t("email")}</a>
+                </div>
+              ) : null}
               <div className="mx-6 mt-7 border-t border-border pt-5">
                 <p className="kicker">{t("settings")}</p>
                 <div className="menu-theme-buttons mt-3 grid grid-cols-3 gap-2">
@@ -111,6 +113,20 @@ export function Header(_props: { saleEnabled?: boolean }) {
         </div>
         {brand}
         <div className="flex shrink-0 items-center justify-end gap-0.5">
+          <div role="group" aria-label={t("language")} className="mr-2 hidden items-center gap-1 lg:flex">
+            {menuLanguages.map((item) => (
+              <button
+                key={item.code}
+                type="button"
+                lang={item.code}
+                aria-pressed={language === item.code}
+                onClick={() => setLanguage(item.code)}
+                className={cn("rounded-none px-1.5 py-2 text-[10px] tracking-[0.08em] transition-colors hover:text-foreground", language === item.code ? "text-foreground" : "text-muted-foreground", overlay && "text-white/70 hover:text-white")}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
           <Button variant="ghost" size="icon" className={cn(iconBtn, "relative hidden lg:inline-flex", overlay && "hover:bg-white/10 hover:text-white")} asChild>
             <Link href="/wishlist" aria-label={t("wishlist")}><Heart strokeWidth={1.6} />{ids.length > 0 ? <span className="absolute top-2.5 right-2.5 size-1.5 rounded-full bg-current" /> : null}</Link>
           </Button>

@@ -17,18 +17,22 @@ export default function StoreLayout({
     "@type": "Organization",
     name: site.name,
     url: site.production,
-    email: site.email,
-    telephone: `+${site.whatsapp}`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: site.address,
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: site.email,
-      telephone: `+${site.whatsapp}`,
-    },
+    ...(site.publicContactDetailsConfirmed
+      ? {
+          email: site.email,
+          telephone: `+${site.whatsapp}`,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: site.address,
+          },
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            email: site.email,
+            telephone: `+${site.whatsapp}`,
+          },
+        }
+      : {}),
   };
 
   return (

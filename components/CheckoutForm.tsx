@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/context/CurrencyContext";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { cities, site } from "@/lib/site";
+import { cities } from "@/lib/site";
 import { cityLabel, colorLabel, productName } from "@/lib/copy-catalog";
 import { formatMoney, shippingForCity } from "@/lib/money";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { CheckoutIdentity } from "@/components/CheckoutIdentity";
+import Link from "next/link";
 
 export function CheckoutForm() {
   const { items, subtotal, clear } = useCart();
@@ -237,7 +238,7 @@ export function CheckoutForm() {
           {pending ? t("placing") : t("placeOrder")}
         </Button>
         <p className="mt-3 text-xs text-muted-foreground">
-          {t("questionsBeforePay")} {site.whatsappDisplay}.
+          {t("questionsBeforePay")} <Link href="/contact" className="underline underline-offset-4">{t("contact")}</Link>
         </p>
       </aside>
     </form>

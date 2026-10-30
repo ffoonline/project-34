@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { DocPage } from "@/components/DocSections";
 
 export const metadata: Metadata = {
-  title: "Shipping",
-  description: "Shipping zones and delivery for THIRTY FOUR.",
+  title: "Shipping — Draft",
+  description: "Preview only; shipping operations are pending confirmation and review.",
+  robots: { index: false, follow: false },
 };
 
 export default function ShippingPage() {
