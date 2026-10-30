@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { setCustomerCookie } from "@/lib/customer-session";
-import { adminEmail, promoteAdminIfNeeded, setAdminCookie } from "@/lib/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createCustomer } from "@/lib/store";
 import { httpError, requireEmail, requirePassword, ValidationError } from "@/lib/validation";
@@ -22,12 +21,7 @@ export async function POST(request: Request) {
         const status = /already|registered|exists/i.test(error.message) ? 409 : 400;
         return NextResponse.json({ error: error.message }, { status });
       }
-      if (data.user) {
-        const promoted = await promoteAdminIfNeeded(data.user);
-        if (promoted || data.user.email?.toLowerCase() === adminEmail()) {
-          await setAdminCookie();
-        }
-      }
+      // Public signup is customer-only. Admin privileges are provisioned out of band.
       if (data.session || data.user) {
         await setCustomerCookie(email);
       }
@@ -35,7 +29,7 @@ export async function POST(request: Request) {
         ok: true,
         identifier: email,
         needsConfirm: !data.session,
-        role: data.user?.app_metadata?.role === "admin" ? "admin" : "customer",
+        role: "customer",
       });
     }
 

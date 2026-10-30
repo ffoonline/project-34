@@ -14,13 +14,14 @@ connection token can contain `$`.
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` / `STRIPE_PUBLISHABLE_KEY` | Payment Element |
 | `STRIPE_WEBHOOK_SECRET` | `POST /api/webhooks/stripe` (raw body) |
 | `ADMIN_PASSWORD` | `/login` house-key fallback |
-| `ADMIN_EMAIL` | Promoted to admin on sign-in |
 | `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Session refresh + RLS; does not gate the shop |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only: `place_order`, seed, admin writes |
 | `GLOBAL_CONFIG` | Announcement, maintenance, sale |
 | `CRON_SECRET` | `GET /api/cron` in production |
 | `UPSTASH_REDIS_REST_URL` / `TOKEN` | OTP in production; else in-memory |
 | `POSTHOG_ANALYTICS_*` | Mapped to `NEXT_PUBLIC_POSTHOG_*` in `next.config.ts` |
+
+Public signup and email matching never grant admin access. Provision administrators only through a trusted Supabase admin operation after verifying account ownership; set `app_metadata.role` with the Dashboard or a protected server-side process. Never expose `SUPABASE_SERVICE_ROLE_KEY`.
 
 ## Routes that matter
 
@@ -34,7 +35,7 @@ connection token can contain `$`.
 | GET / POST | `/api/products` | Public list/search; admin create |
 | POST | `/api/newsletter` | Unique email |
 | POST | `/api/auth/signup` | Email / password |
-| POST | `/api/auth/login` | Staff email/password or house key |
+| POST | `/api/auth/login` | Supabase login for an explicitly provisioned admin, or house-key fallback |
 | POST | `/api/auth/signout` | Clears Supabase session + cookies |
 | POST | `/api/auth/*` | OTP + customer session cookie `tf_customer` |
 

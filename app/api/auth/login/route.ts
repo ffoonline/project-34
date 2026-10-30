@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import {
-  adminEmail,
   adminPassword,
-  promoteAdminIfNeeded,
   sessionHasAdminRole,
   setAdminCookie,
 } from "@/lib/auth";
@@ -28,8 +26,7 @@ export async function POST(request: Request) {
       if (error || !data.user) {
         return NextResponse.json({ error: "That sign-in does not match an account." }, { status: 401 });
       }
-      const promoted = await promoteAdminIfNeeded(data.user);
-      const admin = promoted || (await sessionHasAdminRole(data.user)) || email === adminEmail();
+      const admin = await sessionHasAdminRole(data.user);
       await setCustomerCookie(email);
       if (admin) await setAdminCookie();
       return NextResponse.json({

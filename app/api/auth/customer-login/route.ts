@@ -3,7 +3,7 @@ import { findCustomer } from "@/lib/store";
 import { setCustomerCookie } from "@/lib/customer-session";
 import { isEmailIdentifier, normalizeIdentifier } from "@/lib/paths";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { adminEmail, promoteAdminIfNeeded, sessionHasAdminRole, setAdminCookie } from "@/lib/auth";
+import { sessionHasAdminRole, setAdminCookie } from "@/lib/auth";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as { identifier?: string; password?: string };
@@ -24,8 +24,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "That sign-in does not match an account." }, { status: 401 });
     }
     await setCustomerCookie(identifier);
-    const promoted = await promoteAdminIfNeeded(data.user);
-    if (promoted || (await sessionHasAdminRole(data.user)) || identifier === adminEmail()) {
+    if (await sessionHasAdminRole(data.user)) {
       await setAdminCookie();
     }
     return NextResponse.json({ ok: true, identifier });
