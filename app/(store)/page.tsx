@@ -12,12 +12,18 @@ import { HomeJournalList } from "@/components/JournalViews";
 import { HomeSocial } from "@/components/HomeSocial";
 import { HomeFaq } from "@/components/HomeFaq";
 import { categories } from "@/lib/site";
-import { lookbook } from "@/lib/catalog";
+import { lookbook, newStreetwearProductIds } from "@/lib/catalog";
 import Image from "next/image";
 
 export default async function HomePage() {
   const products = await listProducts();
-  const arrivals = products.filter((product) => product.newArrival).slice(0, 8);
+  const arrivals = products
+    .filter((product) => product.newArrival)
+    .sort(
+      (a, b) =>
+        Number(newStreetwearProductIds.has(b.id)) - Number(newStreetwearProductIds.has(a.id)),
+    )
+    .slice(0, 8);
 
   return (
     <div>
