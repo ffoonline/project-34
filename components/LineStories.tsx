@@ -11,6 +11,7 @@ const leads = categories.filter((item) => item.slug === "men" || item.slug === "
 const rooms = categories.filter((item) => item.slug !== "men" && item.slug !== "women");
 
 function lineImage(slug: string) {
+  if (slug === "accessories") return "/editorial/thirty-four-hero.png";
   return lookbook[slug as keyof typeof lookbook] ?? lookbook.atelier;
 }
 
