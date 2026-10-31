@@ -61,7 +61,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 sm:py-14">
         <div className="flex items-center gap-3 sm:gap-4">
           <Logo invert size={56} className="h-12 w-12 shrink-0 bg-transparent sm:h-14 sm:w-14" />
-          <p className="footer__heading text-[#E3B15B] font-heading text-lg font-semibold tracking-[0.18em] uppercase sm:text-2xl sm:tracking-[0.22em]">{site.legal}</p>
+          <p className="footer__heading text-white font-heading text-lg font-semibold tracking-[0.18em] uppercase sm:text-2xl sm:tracking-[0.22em]">{site.legal}</p>
         </div>
         <div className="mt-8 grid gap-9 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -77,14 +77,14 @@ export function Footer() {
               </p>
             ) : null}
             <div className="mt-7 max-w-sm">
-              <p className="footer__heading mb-3 text-[11px] tracking-[0.2em] uppercase text-[#E3B15B]">{t("nextCut")}</p>
+              <p className="footer__heading mb-3 text-[11px] tracking-[0.2em] uppercase text-white">{t("nextCut")}</p>
               <NewsletterForm compact invert rounded />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:col-span-8 lg:grid-cols-4 lg:gap-7">
             {columns.map((column) => (
               <div key={column.title}>
-                <p className="footer__heading text-[#E3B15B] text-[11px] font-semibold tracking-[0.18em] uppercase">{t(column.title)}</p>
+                <p className="footer__heading text-white text-[11px] font-semibold tracking-[0.18em] uppercase">{t(column.title)}</p>
                 <ul className="mt-4 space-y-3 text-sm text-white/70">
                   {column.links.map((link) => (
                     <li key={link.href + link.key}>

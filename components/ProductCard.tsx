@@ -94,17 +94,17 @@ export function ProductCard({
         >
           <Heart className={`size-4 ${saved ? "fill-oxblood text-oxblood" : "text-foreground"}`} strokeWidth={1.5} />
         </button>
-        {!soldOut && (
-          <Button
-            type="button"
-            onClick={addToBag}
-            size="sm"
-            className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 bg-foreground text-background hover:bg-foreground/90"
-          >
-            <ShoppingBag className="mr-2 size-4" />
-            {t("add")}
-          </Button>
-        )}
+        <Button
+          type="button"
+          onClick={addToBag}
+          disabled={soldOut}
+          aria-label={soldOut ? t("soldThrough") : t("addToBag")}
+          size="sm"
+          className="product-card__add absolute inset-x-3 bottom-3 z-10 h-10 justify-center uppercase tracking-[0.16em]"
+        >
+          <ShoppingBag className="me-2 size-4" />
+          {t("add")}
+        </Button>
       </div>
       <div
         className={cn(

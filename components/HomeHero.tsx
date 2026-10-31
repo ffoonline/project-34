@@ -11,8 +11,8 @@ export function HomeHero() {
       <div className="hero__media"><Image src="/editorial/flagship-showroom.png" alt="" fill priority sizes="100vw" /></div>
       <div className="hero__veil" aria-hidden />
       <div className="hero__content">
-        <p className="hero__eyebrow">{t("cutForKabul")}</p>
-        <h1>{t("modernLuxury")}</h1>
+        <p className="hero__eyebrow" dir="ltr">34 Province 1</p>
+        <h1 className="hero__headline" dir="ltr">Global Online Market</h1>
         <p className="hero__lede">{t("tagline")}</p>
         <Link href="/shop?sort=new" className="hero__cta"><span>{t("shopTheHouse")}</span><ArrowRight aria-hidden className="hero__cta-arrow" size={18} strokeWidth={1.5} /></Link>
         <form action="/shop" method="get" role="search" dir={rtl ? "rtl" : "ltr"} className="hero__search">

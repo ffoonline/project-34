@@ -127,7 +127,7 @@ export function Header(_props: { saleEnabled?: boolean }) {
               </button>
             ))}
           </div>
-          <Button variant="ghost" size="icon" className={cn(iconBtn, "relative hidden lg:inline-flex", overlay && "hover:bg-white/10 hover:text-white")} asChild>
+          <Button variant="ghost" size="icon" className={cn(iconBtn, "relative", overlay && "hover:bg-white/10 hover:text-white")} asChild>
             <Link href="/wishlist" aria-label={t("wishlist")}><Heart strokeWidth={1.6} />{ids.length > 0 ? <span className="absolute top-2.5 right-2.5 size-1.5 rounded-full bg-current" /> : null}</Link>
           </Button>
           <Button variant="ghost" size="icon" className={cn(iconBtn, "relative", overlay && "hover:bg-white/10 hover:text-white")} asChild>
