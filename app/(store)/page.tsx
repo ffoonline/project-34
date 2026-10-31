@@ -54,7 +54,7 @@ export default async function HomePage() {
           <div className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-5">
             {categories.map((category) => (
               <Link key={category.slug} href={`/shop/${category.slug}`} className="group relative aspect-[4/5] overflow-hidden bg-muted">
-                <Image src={lookbook[category.slug as keyof typeof lookbook] ?? lookbook.atelier} alt={category.label} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-[1.04]" />
+                <Image src={category.slug === "accessories" ? "/editorial/thirty-four-hero.png" : (lookbook[category.slug as keyof typeof lookbook] ?? lookbook.atelier)} alt={category.label} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-[1.04]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <p className="text-[10px] tracking-[0.18em] uppercase opacity-75">{category.kicker}</p>

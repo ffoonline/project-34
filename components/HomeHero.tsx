@@ -8,7 +8,7 @@ export function HomeHero() {
   const { t, rtl } = useLanguage();
   return (
     <section className="hero">
-      <div className="hero__media"><Image src="/editorial/thirty-four-hero.png" alt="" fill priority sizes="100vw" /></div>
+      <div className="hero__media"><Image src="/editorial/flagship-showroom.png" alt="" fill priority sizes="100vw" /></div>
       <div className="hero__veil" aria-hidden />
       <div className="hero__content">
         <p className="hero__eyebrow">{t("cutForKabul")}</p>
