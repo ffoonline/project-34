@@ -1,6 +1,6 @@
 import "server-only";
 
-import { seedProducts } from "./catalog";
+import { newStreetwearProducts, seedProducts } from "./catalog";
 import { filterProducts, type ProductQuery } from "./filter-products";
 import { createAdminClient } from "./supabase/admin";
 import { isSupabaseConfigured } from "./supabase/env";
@@ -108,6 +108,27 @@ export async function ensureCatalogSeeded() {
     if (insertError) {
       console.error("ensureCatalogSeeded insert:", insertError.message);
       return;
+    }
+  } else {
+    const additionIds = newStreetwearProducts.map((product) => product.id);
+    const { data: existing, error: lookupError } = await admin
+      .from("products")
+      .select("id")
+      .in("id", additionIds);
+    if (lookupError) {
+      console.error("ensureCatalogSeeded additions lookup:", lookupError.message);
+      return;
+    }
+    const existingIds = new Set((existing ?? []).map((row) => row.id as string));
+    const missing = newStreetwearProducts.filter((product) => !existingIds.has(product.id));
+    if (missing.length > 0) {
+      const { error: additionsError } = await admin
+        .from("products")
+        .upsert(missing.map(toProductRow), { onConflict: "id", ignoreDuplicates: true });
+      if (additionsError) {
+        console.error("ensureCatalogSeeded additions:", additionsError.message);
+        return;
+      }
     }
   }
   seeded = true;

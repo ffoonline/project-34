@@ -21,7 +21,7 @@ const photos = {
   knits: "/catalog/house-knits.jpg",
 } as const;
 
-export const seedProducts: Product[] = [
+const baseSeedProducts: Product[] = [
   {
     id: "tf-01",
     slug: "north-wool-overcoat",
@@ -516,6 +516,138 @@ export const seedProducts: Product[] = [
     images: [photos.menMerino, photos.knits, photos.tees],
   },
 ];
+
+export const newStreetwearProducts: Product[] = [
+  {
+    id: "tf-sw-01",
+    slug: "minimal-logo-street-tee",
+    name: "Minimal Logo Street Tee",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 39,
+    description:
+      "A black street tee with a quiet 34 mark at the chest and a bold house graphic across the back.",
+    story: "A clean front, a confident back, and an easy place in the everyday rotation.",
+    fabric: "Midweight cotton jersey.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Black", hex: "#171717" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/minimal-logo-street-tee.jpg"],
+  },
+  {
+    id: "tf-sw-02",
+    slug: "urban-typography-street-tee",
+    name: "Urban Typography Street Tee",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 42,
+    description:
+      "A light-toned tee with a small 34 chest mark and a bold THIRTY FOUR GLOBAL back graphic.",
+    story: "House lettering, kept crisp and direct.",
+    fabric: "Midweight cotton jersey.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Bone", hex: "#eeeae1" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/urban-typography-street-tee.jpg"],
+  },
+  {
+    id: "tf-sw-03",
+    slug: "signature-graphic-hoodie",
+    name: "Signature Graphic Hoodie",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 79,
+    description:
+      "A black pullover hoodie with a discreet chest mark and a city-inspired TFG back graphic.",
+    story: "The signature mark, given room to speak across the back.",
+    fabric: "Cotton-blend fleece.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Black", hex: "#171717" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/signature-graphic-hoodie.jpg"],
+  },
+  {
+    id: "tf-sw-04",
+    slug: "graphic-vibes-street-tee",
+    name: "Graphic Vibes Street Tee",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 45,
+    description:
+      "A black graphic tee carrying the 34 mark and layered house artwork across the front and back.",
+    story: "An expressive graphic, balanced with the familiar house mark.",
+    fabric: "Midweight cotton jersey.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Black", hex: "#171717" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/graphic-vibes-street-tee.jpg"],
+  },
+  {
+    id: "tf-sw-05",
+    slug: "essential-hoodie",
+    name: "Essential Hoodie",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 76,
+    description:
+      "A soft-toned pullover hoodie with a compact chest logo and understated TFG detail at the back.",
+    story: "A quieter layer for the days that call for comfort without extra noise.",
+    fabric: "Cotton-blend fleece.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Ecru", hex: "#ddd7ca" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/essential-hoodie.jpg"],
+  },
+  {
+    id: "tf-sw-06",
+    slug: "worldwide-photo-tee",
+    name: "Worldwide Photo Tee",
+    category: "men",
+    subcategory: "tops",
+    collection: "essentials",
+    price: 44,
+    description:
+      "A light-toned tee with a city-photo collage on the front and a worldwide TFG graphic at the back.",
+    story: "A small tribute to the cities that keep the house moving.",
+    fabric: "Midweight cotton jersey.",
+    care: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [{ name: "Bone", hex: "#eeeae1" }],
+    stock: 8,
+    featured: true,
+    newArrival: true,
+    demand: "steady",
+    images: ["/catalog/worldwide-photo-tee.jpg"],
+  },
+];
+
+export const newStreetwearProductIds = new Set(newStreetwearProducts.map((product) => product.id));
+export const seedProducts: Product[] = [...baseSeedProducts, ...newStreetwearProducts];
 
 export const heroImage = photos.rf34Check;
 

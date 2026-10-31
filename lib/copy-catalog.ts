@@ -508,6 +508,120 @@ export const productCopy: Record<string, ProductCopy> = {
       ps: "په ساړه ماشین کې ومینځئ. هوار وچ کړئ.",
     },
   },
+  "minimal-logo-street-tee": {
+    name: { en: "Minimal Logo Street Tee", "fa-AF": "Minimal Logo Street Tee", ps: "Minimal Logo Street Tee" },
+    description: {
+      en: "A black street tee with a quiet 34 mark at the chest and a bold house graphic across the back.",
+      "fa-AF": "تی‌شرت مشکی سبک خیابانی با نشان ظریف ۳۴ در سینه و طرح برجسته خانه در پشت.",
+      ps: "تور د سړک ټي شرټ، پر سینه د ۳۴ نښه او پر شا د کور څرګند انځور لري.",
+    },
+    story: {
+      en: "A clean front, a confident back, and an easy place in the everyday rotation.",
+      "fa-AF": "روی ساده، پشت بااعتماد و جایگاهی آسان در پوشش روزمره.",
+      ps: "پاک مخ، ډاډمن شا او د ورځني اغوستلو لپاره اسانه انتخاب.",
+    },
+    fabric: { en: "Midweight cotton jersey.", "fa-AF": "جرسی پنبه‌ای با وزن متوسط.", ps: "منځنی وزن پنبه‌یي جرسي." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
+  "urban-typography-street-tee": {
+    name: { en: "Urban Typography Street Tee", "fa-AF": "Urban Typography Street Tee", ps: "Urban Typography Street Tee" },
+    description: {
+      en: "A light-toned tee with a small 34 chest mark and a bold THIRTY FOUR GLOBAL back graphic.",
+      "fa-AF": "تی‌شرت روشن با نشان کوچک ۳۴ در سینه و طرح برجسته THIRTY FOUR GLOBAL در پشت.",
+      ps: "روښانه رنګ ټي شرټ، پر سینه د ۳۴ کوچنۍ نښه او پر شا د THIRTY FOUR GLOBAL څرګند ډیزاین لري.",
+    },
+    story: {
+      en: "House lettering, kept crisp and direct.",
+      "fa-AF": "نوشتار خانه، روشن و بی‌واسطه.",
+      ps: "د کور لیکنه، روښانه او نېغه.",
+    },
+    fabric: { en: "Midweight cotton jersey.", "fa-AF": "جرسی پنبه‌ای با وزن متوسط.", ps: "منځنی وزن پنبه‌یي جرسي." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
+  "signature-graphic-hoodie": {
+    name: { en: "Signature Graphic Hoodie", "fa-AF": "Signature Graphic Hoodie", ps: "Signature Graphic Hoodie" },
+    description: {
+      en: "A black pullover hoodie with a discreet chest mark and a city-inspired TFG back graphic.",
+      "fa-AF": "هودی مشکی با نشان ظریف در سینه و طرح پشتی TFG با الهام از شهر.",
+      ps: "تور پل‌اوور هوډي، پر سینه د ۳۴ نښه او د ښار له الهامه د TFG د شا ډیزاین لري.",
+    },
+    story: {
+      en: "The signature mark, given room to speak across the back.",
+      "fa-AF": "نشان امضا، با فضایی برای دیده‌شدن در پشت.",
+      ps: "د کور ځانګړې نښه، چې پر شا د څرګندېدو ځای لري.",
+    },
+    fabric: { en: "Cotton-blend fleece.", "fa-AF": "فلیس با ترکیب پنبه.", ps: "د پنبه‌يي ګډ ترکیب فلیس." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
+  "graphic-vibes-street-tee": {
+    name: { en: "Graphic Vibes Street Tee", "fa-AF": "Graphic Vibes Street Tee", ps: "Graphic Vibes Street Tee" },
+    description: {
+      en: "A black graphic tee carrying the 34 mark and layered house artwork across the front and back.",
+      "fa-AF": "تی‌شرت گرافیکی مشکی با نشان ۳۴ و طرح لایه‌ای خانه در جلو و پشت.",
+      ps: "تور ګرافیکي ټي شرټ، پر مخ او شا د ۳۴ نښه او د کور څو پوړیز ډیزاین لري.",
+    },
+    story: {
+      en: "An expressive graphic, balanced with the familiar house mark.",
+      "fa-AF": "طرحی بیانی، در تعادل با نشان آشنای خانه.",
+      ps: "یو څرګند انځور، د کور له پېژندل شوې نښې سره په توازن کې.",
+    },
+    fabric: { en: "Midweight cotton jersey.", "fa-AF": "جرسی پنبه‌ای با وزن متوسط.", ps: "منځنی وزن پنبه‌یي جرسي." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
+  "essential-hoodie": {
+    name: { en: "Essential Hoodie", "fa-AF": "Essential Hoodie", ps: "Essential Hoodie" },
+    description: {
+      en: "A soft-toned pullover hoodie with a compact chest logo and understated TFG detail at the back.",
+      "fa-AF": "هودی روشن با لوگوی جمع‌وجور در سینه و جزئیات آرام TFG در پشت.",
+      ps: "روښانه پل‌اوور هوډي، پر سینه کوچنی لوګو او پر شا ارام TFG جزئیات لري.",
+    },
+    story: {
+      en: "A quieter layer for the days that call for comfort without extra noise.",
+      "fa-AF": "لایه‌ای آرام برای روزهایی که راحتی بی‌هیاهو می‌خواهند.",
+      ps: "د هغو ورځو لپاره ارامه پوښ چې له شور پرته راحت غواړي.",
+    },
+    fabric: { en: "Cotton-blend fleece.", "fa-AF": "فلیس با ترکیب پنبه.", ps: "د پنبه‌يي ګډ ترکیب فلیس." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
+  "worldwide-photo-tee": {
+    name: { en: "Worldwide Photo Tee", "fa-AF": "Worldwide Photo Tee", ps: "Worldwide Photo Tee" },
+    description: {
+      en: "A light-toned tee with a city-photo collage on the front and a worldwide TFG graphic at the back.",
+      "fa-AF": "تی‌شرت روشن با کلاژ عکس شهرها در جلو و طرح جهانی TFG در پشت.",
+      ps: "روښانه ټي شرټ، پر مخ د ښارونو د عکسونو ټولګه او پر شا د نړۍ‌وال TFG ډیزاین لري.",
+    },
+    story: {
+      en: "A small tribute to the cities that keep the house moving.",
+      "fa-AF": "ادای احترامی کوچک به شهرهایی که خانه را به حرکت درمی‌آورند.",
+      ps: "هغو ښارونو ته کوچنۍ درناوی چې کور په حرکت کې ساتي.",
+    },
+    fabric: { en: "Midweight cotton jersey.", "fa-AF": "جرسی پنبه‌ای با وزن متوسط.", ps: "منځنی وزن پنبه‌یي جرسي." },
+    care: {
+      en: "Machine wash cold with like colours. Turn inside out. Do not bleach.",
+      "fa-AF": "با رنگ‌های مشابه و در آب سرد ماشینی بشویید. پشت‌ورو کنید. سفیدکننده نزنید.",
+      ps: "له ورته رنګونو سره په سړو اوبو ماشین کې ومینځئ. دننه یې واړوئ. بلیچ مه کاروئ.",
+    },
+  },
 };
 
 export function productName(slug: string, lang: string, fallback: string) {
