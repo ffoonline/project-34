@@ -1,11 +1,14 @@
 {
-  "version": 1,
+  "version": 2,
   "providers": {
     "posthog": {
       "name": "PostHog"
     },
     "vercel": {
       "name": "Vercel"
+    },
+    "stripe": {
+      "name": "stripe"
     }
   },
   "resources": {
@@ -28,6 +31,18 @@
       "name": "vercel-plan",
       "providerName": "Vercel",
       "serviceId": "hobby"
+    },
+    "stripe-sandbox": {
+      "name": "stripe-sandbox",
+      "livemode": false,
+      "providerName": "stripe",
+      "serviceId": "sandbox"
+    },
+    "stripe-livemode": {
+      "name": "stripe-livemode",
+      "livemode": true,
+      "providerName": "stripe",
+      "serviceId": "livemode"
     }
   }
 }

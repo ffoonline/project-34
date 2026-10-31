@@ -2,10 +2,25 @@ import "server-only";
 
 import Stripe from "stripe";
 
+function stripeIsLivemode() {
+  const mode = process.env.STRIPE_MODE?.trim().toLowerCase();
+  return mode === "live" || mode === "livemode";
+}
+
+function configuredStripeSecretKey() {
+  const modeKey = stripeIsLivemode()
+    ? process.env.STRIPE_LIVEMODE_SECRET_KEY
+    : process.env.STRIPE_SANDBOX_SECRET_KEY;
+  return modeKey || process.env.STRIPE_SECRET_KEY;
+}
+
 function stripeSecretKey() {
-  const key = process.env.STRIPE_SECRET_KEY;
+  const key = configuredStripeSecretKey();
   if (!key) {
-    throw new Error("Missing STRIPE_SECRET_KEY environment variable");
+    const expectedKey = stripeIsLivemode()
+      ? "STRIPE_LIVEMODE_SECRET_KEY"
+      : "STRIPE_SANDBOX_SECRET_KEY";
+    throw new Error(`Missing ${expectedKey} or legacy STRIPE_SECRET_KEY environment variable`);
   }
   return key;
 }
@@ -17,7 +32,7 @@ function createStripe() {
   return client;
 }
 
-// Official App Router client: `import "server-only"` + `new Stripe(process.env.STRIPE_SECRET_KEY)`.
+// Secret-key selection stays server-only; next.config.ts publishes only the selected publishable key.
 // Instantiation is deferred so the house still boots when the secret is unset (COD / WhatsApp).
 export const stripe = new Proxy({} as Stripe, {
   get(_target, property, receiver) {
@@ -28,12 +43,18 @@ export const stripe = new Proxy({} as Stripe, {
 });
 
 export function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) return null;
+  if (!configuredStripeSecretKey()) return null;
   return createStripe();
 }
 
 export function stripePublishableKey() {
+  const modeKey = stripeIsLivemode()
+    ? process.env.NEXT_PUBLIC_STRIPE_LIVEMODE_PUBLISHABLE_KEY ||
+      process.env.STRIPE_LIVEMODE_PUBLISHABLE_KEY
+    : process.env.NEXT_PUBLIC_STRIPE_SANDBOX_PUBLISHABLE_KEY ||
+      process.env.STRIPE_SANDBOX_PUBLISHABLE_KEY;
   return (
+    modeKey ||
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
     process.env.STRIPE_PUBLISHABLE_KEY ||
     ""
